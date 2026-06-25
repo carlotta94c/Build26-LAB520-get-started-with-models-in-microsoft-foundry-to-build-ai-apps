@@ -1313,10 +1313,10 @@ Provisioning and deploying (azd up)
 
 ### Alternative: Deploy with the Microsoft Foundry skill in GitHub Copilot
 
-Instead of running the `azd` commands yourself, you can let **GitHub Copilot** drive the deployment using the **Microsoft Foundry** skill that the Foundry Toolkit contributes to Copilot's **agent mode**.
+Instead of running the `azd` commands yourself, you can let **GitHub Copilot** drive the deployment using the **Microsoft Foundry** skill that the Foundry Toolkit contributes to Copilot's **Agent** mode.
 
-1. In VS Code, open the **GitHub Copilot Chat** view and switch the chat to **Agent** mode.
-2. Make sure the **Microsoft Foundry** tools (skill) are enabled in the tools/skills picker for the chat.
+1. In VS Code, open the **GitHub Copilot Chat** view and select **Agent** from the chat mode dropdown.
+2. Open the **Tools** picker (the tools icon in the chat input box) and make sure the **Microsoft Foundry** tools are enabled.
 3. Ask Copilot to deploy the agent, for example:
 
 ```text
