@@ -38,7 +38,7 @@ Across six labs, you -- as Serena, a developer at Zava -- constructed a **produc
 
 | | |
 |---|---|
-| **What you did** | Browsed the Foundry model catalog, evaluated model properties, tested Zava review moderation prompts in the Playground |
+| **What you did** | Browsed the Foundry model catalog in the Foundry Toolkit for VS Code, evaluated model properties, tested Zava review moderation prompts in the playground |
 | **Key skill** | Selecting the right model for a task based on capabilities, pricing, and quotas |
 | **Outcome** | Chose **gpt-4.1-mini** as the model for Zava's review moderation |
 
@@ -98,7 +98,7 @@ Across six labs, you -- as Serena, a developer at Zava -- constructed a **produc
 
 | | |
 |---|---|
-| **What you did** | Packaged Zava's review moderation logic as a Docker container, deployed it to Foundry Agent Service with **azd up**, tested via CLI and the Foundry Playground |
+| **What you did** | Packaged Zava's review moderation logic as a Docker container, deployed it to Foundry Agent Service with **azd up** (or the Microsoft Foundry skill in GitHub Copilot), tested via CLI and the Foundry Toolkit hosted agents playground |
 | **Key skill** | Containerized agent deployment, the Agent Framework SDK, hosted agent lifecycle management |
 | **Outcome** | A live, cloud-hosted Zava review moderation agent accessible via the OpenAI Responses API |
 
@@ -111,7 +111,7 @@ Across six labs, you -- as Serena, a developer at Zava -- constructed a **produc
 By completing this workshop, you gained hands-on experience with:
 
 ### Azure & Infrastructure
-- Navigating the Microsoft Foundry portal and model catalog
+- Navigating the Foundry Toolkit for VS Code and the model catalog
 - Provisioning infrastructure with Bicep and **azd**
 - Managing Azure resources (AI Services, ACR, RBAC, monitoring)
 - Understanding Foundry project architecture (accounts, projects, deployments, capability hosts)
@@ -129,7 +129,7 @@ By completing this workshop, you gained hands-on experience with:
 - Local testing before cloud deployment
 - Deploying containerized agents to Foundry Agent Service
 - Invoking and monitoring agents via azd ai agent CLI
-- Testing agents in the Foundry Playground
+- Testing agents in the Foundry Toolkit hosted agents playground
 
 ---
 

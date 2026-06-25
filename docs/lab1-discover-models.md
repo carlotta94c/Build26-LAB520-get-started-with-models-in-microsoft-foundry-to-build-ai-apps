@@ -10,39 +10,30 @@ To begin, log into the virtual machine using the following credentials: +++@lab.
 
 You are **Serena**, a developer at **Zava** -- a large global home-improvement retailer that operates both online and physical stores. Zava's platform receives thousands of customer product reviews daily from shoppers like **Bruno**, who is renovating his kitchen. Your task is to build an automated review moderation system that classifies customer reviews before they go live on the site. Eventually, this system will work alongside **Cora**, Zava's AI shopping assistant, to keep the platform safe and helpful.
 
-In this lab, you will explore the Microsoft Foundry model catalog to find a model that can power Zava's review moderation pipeline.
+In this lab, you will explore the Microsoft Foundry model catalog — directly inside Visual Studio Code using the **Foundry Toolkit** extension — to find a model that can power Zava's review moderation pipeline.
 
 ## Objective
 
-Explore the Microsoft Foundry portal to discover available hosted models, understand model capabilities, and identify a model suitable for inference-based tasks like product review moderation.
+Explore the Foundry Toolkit model catalog in Visual Studio Code to discover available hosted models, understand model capabilities, and identify a model suitable for inference-based tasks like product review moderation.
 
 ---
 
-## Step 1: Open Microsoft Foundry Portal
+## Step 1: Open the Foundry Toolkit in Visual Studio Code
 
-Open, Microsoft Foundry Portal https://ai.azure.com and sign in with the following Azure credentials:
+The **Foundry Toolkit** extension is installed as part of the lab setup, so you can explore models without leaving your editor — no web browser required.
 
-Login with your Microsoft Foundry Username and password
+1. Open Visual Studio Code.
+2. In the **Activity Bar** on the left, click the **Foundry Toolkit** icon to open the toolkit panel.
+3. If you are prompted to sign in to Azure to access your Foundry resources, sign in with your Azure credentials.
 
-
-You will land on the Foundry home page. This is the central hub for managing AI projects, models, and deployments.
-
-Ensure the new foundry switch at the top of the screen is turned on. 
-
-![newfoundry.png](./images/newfoundry.png)
-
-You will also have to update the current project to the latest Foundry version. Select the project listed to update.
-![selectproject.png](./images/selectproject.png) 
-
+The toolkit panel is the central hub for browsing models, testing them in a playground, and working with agents — all from within VS Code.
 
 ---
 
 ## Step 2: Explore the Model Catalog
 
-1. In the main windows, click **Find models** or select **discover** from the top menu.
-2. In the top menu navigation you will now be in **discover**
-3. In the main window browse the available models -- these are production-ready, hosted models you can use without fine-tuning
-4. You can use the filters models within the model select page, filter for model types **capabilities**, **Inference task**, **Chat Completition**, **Image Analysis** etc This allow you to quickly filter models based on a specific task or requirement.
+1. In the Foundry Toolkit panel, under **MODELS**, select **Catalog** to open the model catalog view -- these are production-ready, hosted models you can use without fine-tuning.
+2. Browse the available models. Use the filters at the top of the catalog to narrow the list -- for example, by model types **capabilities**, **Inference task**, **Chat Completion**, **Image Analysis**, or by where the model is **hosted by** (such as Microsoft Foundry). This lets you quickly filter models based on a specific task or requirement.
 
 Select a Model to view the Model Card
 
@@ -77,10 +68,9 @@ For this workshop, you need a model that supports **chat completion** -- the abi
 
 ## Step 4: Check Model Details
 
-Click on your chosen model (e.g., **gpt-4.1-mini**) to view its detail page:
+Click on your chosen model (e.g., **gpt-4.1-mini**) in the catalog to view its model card:
 
 1. **Details** Read the model description and capabilities
-2. **Deployments** -- Deployment options
 2. **Benchmarks** -- Review performance metrics
 3. **License** -- The Model License
 
@@ -91,21 +81,20 @@ Click on your chosen model (e.g., **gpt-4.1-mini**) to view its detail page:
 
 ## Step 5: Explore the Playground (Optional)
 
-1. Return to the model detail page
-2. Select **Deploy** → Select "gpt-4.1-mini" under Use an existing deployment, which then brings you to the **playground** for the model deployment.
-3. In the **instructions**, enter:
+1. From the **gpt-4.1-mini** model card, select **Try in Playground** (or open the **Playground** under **TOOLS** in the toolkit panel and choose the gpt-4.1-mini deployment). This opens the model playground inside VS Code.
+2. In the **System prompt** (instructions), enter:
 
 ```
 You are a product review moderator for Zava, a home-improvement retailer. Classify the following customer review as SAFE, NEEDS_REVIEW, or UNSAFE. Respond with only the classification label.
 ```
 
-4. In the chat with model window, enter:
+3. In the chat box, enter:
 
 ```
 This paint is garbage and whoever designed it should be fired
 ```
 
-5. Click **Send** and observe the response
+4. Send the message and observe the response
 
 This is a preview of the inference pattern you will implement in code during Labs 3 and 4 to moderate Zava product reviews.
 
@@ -113,10 +102,9 @@ This is a preview of the inference pattern you will implement in code during Lab
 
 ## What You Learned
 
-- ✅ How to navigate the Microsoft Foundry portal
-- ✅ How to browse the model catalog
+- ✅ How to navigate the Foundry Toolkit in Visual Studio Code
+- ✅ How to browse the model catalog from within VS Code
 - ✅ How to identify models suitable for chat completion tasks
-- ✅ How to check quota and region availability
 - ✅ How a model responds to a Zava review moderation prompt
 
 ---

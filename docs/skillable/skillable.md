@@ -12,64 +12,41 @@ To begin, log into the virtual machine using the following credentials: +++@lab.
 
 You are a developer at **Zava** — a large global home-improvement retailer that operates both online and physical stores. Zava's platform receives thousands of customer product reviews daily from shoppers like **Bruno**, who is renovating his kitchen. Your task is to build an automated review moderation system that classifies customer reviews before they go live on the site. Eventually, this system will work alongside **Cora**, Zava's AI shopping assistant, to keep the platform safe and helpful.
 
-In this lab, you will explore the Microsoft Foundry model catalog to find a model that can power Zava's review moderation pipeline.
+In this lab, you will explore the Microsoft Foundry model catalog — directly inside Visual Studio Code using the **Foundry Toolkit** extension — to find a model that can power Zava's review moderation pipeline.
 
 ## Objective
 
-Explore the Microsoft Foundry portal to discover available hosted models, understand model capabilities, and identify a model suitable for inference-based tasks like product review moderation.
+Explore the Foundry Toolkit model catalog in Visual Studio Code to discover available hosted models, understand model capabilities, and identify a model suitable for inference-based tasks like product review moderation.
 
 ---
 
-## Step 1: Open Microsoft Foundry portal
+## Step 1: Open the Foundry Toolkit in Visual Studio Code
 
-Open the Microsoft Edge browser from the bottom taskbar.
+The **Foundry Toolkit** extension is already installed on the lab virtual machine, so you can explore models without leaving your editor — no web browser required.
 
-Navigate to the Microsoft Foundry Portal at +++https://ai.azure.com+++ 
+1. Open Visual Studio Code from the Start menu or desktop.
+2. In the **Activity Bar** on the left, click the **Foundry Toolkit** icon to open the toolkit panel.
+3. If you are prompted to sign in to Azure to access your Foundry resources, sign in with the following Azure credentials.
 
-Select the **Start building** button and sign in with the following Azure credentials.
+    Username:  
+    +++@lab.CloudPortalCredential(User1).Username+++
 
-Username:  
-+++@lab.CloudPortalCredential(User1).Username+++
+    If prompted for a Temporary Access Password 'TAP'
+    +++@lab.CloudPortalCredential(User1).AccessToken+++
 
-If prompted for a Temporary Access Password 'TAP'
-+++@lab.CloudPortalCredential(User1).AccessToken+++
+    If prompted for a Password: 
+    +++@lab.CloudPortalCredential(User1).Password+++
 
-If prompted for a Password: 
-+++@lab.CloudPortalCredential(User1).Password+++
-
-You will land on the Foundry **resources** page. This is the central hub for managing AI resources.
-
-Ensure the **New Foundry** switch at the top of the screen is turned on.
-
-!IMAGE[newfoundry.png](instructions343795/newfoundry.png)
-
-Now click the linked project name from the "All resources" listing to open it in Foundry.
-If you see a dialog pop open about what you would like to do next, you can close it.
-
-> [+alert] **If you are unable to view the project please see below**
-> 
-1. Switch to old foundry portal by toggling the New Foundry toggle at the top of the page
-!IMAGE[sla1i1tp.png](instructions343795/sla1i1tp.png)
-2. Click "Continue without feedback"
-!IMAGE[yc6ix262.png](instructions343795/yc6ix262.png)
-3. Project will be visible in old foundry portal, click on the project
-!IMAGE[f71vnukz.png](instructions343795/f71vnukz.png)
-4. Once in the project click on the New Foundry toggle button to return to new foundry with the project retained in the new foundry
-!IMAGE[0dt15v07.png](instructions343795/0dt15v07.png)
-!IMAGE[wwez4x1w.png](instructions343795/wwez4x1w.png)
-
+The toolkit panel is your central hub for browsing models, testing them in a playground, and working with agents — all from within VS Code.
 
 ---
 
 ## Step 2: Explore the model catalog
 
-1. In the main window, click **Discover** from the top menu.
+1. In the Foundry Toolkit panel, under **MODELS**, select **Catalog** to open the model catalog view. These are production-ready, hosted models that you can use without fine-tuning.
+2. Browse the available models. You can use the filters at the top of the catalog to narrow down the list — for example, by Publisher (Azure OpenAI, Microsoft, Meta, Mistral, etc.), by where the model is **hosted by** (such as Microsoft Foundry), or by task (Chat Completion, Image Analysis, etc.). This allows you to quickly filter models based on a specific task or requirement.
 
-2. In the **Discover** section, browse the available models by clicking **Models**. These are production-ready, hosted models that you can use without fine-tuning.
-3. You can use the filters within the **Models** page to narrow down the list of models. For example, you can filter by Supported features (Agent service, Fine-tuning, etc), Source (Azure OpenAI, Microsoft, Meta, Mistral, etc.) or by Inference Task (Chat Completion, Image Analysis etc). This allows you to quickly filter models based on a specific task or requirement.
-
-
-Select a model to view the details page. Take note of the following properties in the side box.
+Select a model to view its model card. Take note of the following properties.
 
 | Property | Common values |
 |----------|-----------------|
@@ -78,54 +55,46 @@ Select a model to view the details page. Take note of the following properties i
 | **Input type** | text, image |
 | **Output type** | text, image |
 | **Context window** | Varies by model (see model card) |
-
 | **Token limits** | Varies by model (see model card) |
 
+---
 
 ## Step 3: Check model details
 
-
-## Step 4: Check model details
-
 For this workshop, you need a model that supports **chat completion**: the ability to accept a system prompt and user messages and return a structured response. The **gpt-4.1-mini** from Azure OpenAI is a high quality model that is also fast and cost-efficient, so we have already deployed it in the Foundry project for you.
 
-Find **gpt-4.1-mini** from the catalog and open the details page.
-Explore the tabs at the top:
+Find **gpt-4.1-mini** in the catalog and open its model card to review:
 
 1. **Details**: Model description and capabilities
-2. **Deployments**: A list of current deployments of this model
-3. **Benchmarks**: Scores and performance metrics
-4. **Responsible AI**: Guardrails imposed on the model from Azure AI Content Safety
-5. **License**: Links to applicable licensing terms
-
+2. **Benchmarks**: Scores and performance metrics
+3. **Responsible AI**: Guardrails imposed on the model from Azure AI Content Safety
+4. **License**: Links to applicable licensing terms
 
 ---
 
 ## Step 4: Explore the playground (Optional)
 
-## Step 5: Explore the playground (Optional)
-
-1. From the **gpt-4.1-mini** deployments tab, select the existing deployment. That brings you to the **playground** for the model deployment.
-2. In the **Instructions** text field, enter:
+1. From the **gpt-4.1-mini** model card, select **Try in Playground** (or, under **TOOLS** in the toolkit panel, open the **Playground** and choose the **gpt-4.1-mini** deployment). This opens the model playground inside VS Code.
+2. In the **System prompt** (Instructions) field, enter:
 
 ```Instructions
 You are a product review moderator for Zava, a home-improvement retailer. Classify the following customer review as SAFE, NEEDS_REVIEW, or UNSAFE. Respond with only the classification label.
 ```
 
-3. In the **Chat with the model** text field, enter:
+3. In the chat box, enter:
 
 ```Prompt
 This paint is garbage and whoever designed it should be fired
 ```
 
-4. Click the send button and observe the response. This is a preview of the inference pattern you will implement in code during Labs 3 and 4 to moderate Zava product reviews.
+4. Send the message and observe the response. This is a preview of the inference pattern you will implement in code during Labs 3 and 4 to moderate Zava product reviews.
 
 ---
 
 ## What you learned
 
-- ✅ How to navigate the Microsoft Foundry portal
-- ✅ How to browse the model catalog
+- ✅ How to navigate the Foundry Toolkit in Visual Studio Code
+- ✅ How to browse the model catalog from within VS Code
 - ✅ How a model responds to a Zava review moderation prompt
 
 ---
@@ -1342,6 +1311,22 @@ Provisioning and deploying (azd up)
 
 > The first deployment takes 3-5 minutes. Subsequent deployments are faster.
 
+### Alternative: Deploy with the Microsoft Foundry skill in GitHub Copilot
+
+Instead of running the `azd` commands yourself, you can let **GitHub Copilot** drive the deployment using the **Microsoft Foundry** skill that the Foundry Toolkit contributes to Copilot's **agent mode**.
+
+1. In VS Code, open the **GitHub Copilot Chat** view and switch the chat to **Agent** mode.
+2. Make sure the **Microsoft Foundry** tools (skill) are enabled in the tools/skills picker for the chat.
+3. Ask Copilot to deploy the agent, for example:
+
+```text
+Deploy the hosted agent in src/agent to my Microsoft Foundry project.
+```
+
+4. Copilot uses the Microsoft Foundry skill to run the `azd` deployment steps for you. Review and **approve** each command it proposes (such as setting `FOUNDRY_PROJECT_ENDPOINT` and running `azd up`), and watch the deployment progress in the terminal.
+
+> **Tip:** This is handy when you want a guided, conversational deployment — the skill knows the Foundry deployment workflow, so you can describe the goal in natural language instead of memorizing CLI flags.
+
 ---
 
 ## Step 5: Check agent status
@@ -1406,25 +1391,18 @@ azd ai agent invoke --new-session "Fresh conversation here"
 
 ---
 
-## Step 7: Test in the Microsoft Foundry Playground
+## Step 7: Test in the Foundry Toolkit hosted agents playground
 
-The Foundry Playground at +++https://ai.azure.com+++ lets you interact with your deployed agent through a chat-style UI — no CLI or code required. This is useful for quick testing, demos, and validating prompt behavior.
+The **Foundry Toolkit** extension in Visual Studio Code lets you interact with your deployed hosted agent through a chat-style **playground** — right inside your editor, with no CLI, code, or web browser required. This is useful for quick testing, demos, and validating prompt behavior.
 
-### 7.1: Open the Playground
+### 7.1: Open the hosted agents playground
 
-1. Open in the browser and navigate to +++https://ai.azure.com+++. If you got signed out, sign in with the same Azure account you used earlier.
-2. In the top navigation, select **Build**. If you do not see it, click **All projects** and find it under your AI Services resource
-3. In the left sidebar, click **Agents**.
-4. Find **zava-review-moderation-agent** in the agent list. Its details should show: **Version** (increments with each deployment), **Type** = hosted, and **Created on** (timestamp of last update).
-5. Click the agent name to open its detail page.
-6. Click the **Try in Playground** button (or the **Playground** tab) to open the interactive chat UI. You may already be in it.
+1. In VS Code, click the **Foundry Toolkit** icon in the **Activity Bar** to open the toolkit panel. If prompted, sign in with the same Azure account you used earlier.
+2. Expand the **Agents** section to see the hosted agents in your Foundry project.
+3. Find **zava-review-moderation-agent** in the agent list. Its details should show the **Version** (increments with each deployment) and that it is a **hosted** agent.
+4. Select the agent and open it in the **Playground** to start the interactive chat UI.
 
-> **Tip:** You can get a direct playground link using the azd CLI. Run this command again:
-> 
-```powershell
-> azd ai agent show
-```
-> Look for **Playground URL** in the output.
+> **Tip:** If the agent does not appear yet, refresh the **Agents** view — it can take a minute after deployment for the agent to register.
 
 ### 7.2: Test classification prompts
 
@@ -1591,7 +1569,7 @@ Across six labs, you constructed a **product review moderation pipeline** end-to
 
 | | |
 |---|---|
-| **What you did** | Browsed the Foundry model catalog, evaluated model properties, tested Zava review moderation prompts in the Playground |
+| **What you did** | Browsed the Foundry model catalog in the Foundry Toolkit for VS Code, evaluated model properties, tested Zava review moderation prompts in the playground |
 | **Key skill** | Selecting the right model for a task based on capabilities, pricing, and quotas |
 | **Outcome** | Chose **gpt-4.1-mini** as the model for Zava's review moderation |
 
@@ -1651,7 +1629,7 @@ Across six labs, you constructed a **product review moderation pipeline** end-to
 
 | | |
 |---|---|
-| **What you did** | Packaged Zava's review moderation logic as a Docker container, deployed it to Foundry Agent Service with **azd up**, tested via CLI and the Foundry Playground |
+| **What you did** | Packaged Zava's review moderation logic as a Docker container, deployed it to Foundry Agent Service with **azd up** (or the Microsoft Foundry skill in GitHub Copilot), tested via CLI and the Foundry Toolkit hosted agents playground |
 | **Key skill** | Containerized agent deployment, the Agent Framework SDK, hosted agent lifecycle management |
 | **Outcome** | A live, cloud-hosted Zava review moderation agent accessible via the OpenAI Responses API |
 
@@ -1664,7 +1642,7 @@ Across six labs, you constructed a **product review moderation pipeline** end-to
 By completing this workshop, you gained hands-on experience with:
 
 ### Azure & infrastructure
-- Navigating the Microsoft Foundry portal and model catalog
+- Navigating the Foundry Toolkit for VS Code and the model catalog
 - Provisioning infrastructure with Bicep and **azd**
 - Managing Azure resources (AI Services, ACR, RBAC, monitoring)
 - Understanding Foundry project architecture (accounts, projects, deployments, capability hosts)
@@ -1682,7 +1660,7 @@ By completing this workshop, you gained hands-on experience with:
 - Local testing before cloud deployment
 - Deploying containerized agents to Foundry Agent Service
 - Invoking and monitoring agents via azd ai agent CLI
-- Testing agents in the Foundry Playground
+- Testing agents in the Foundry Toolkit hosted agents playground
 
 ---
 

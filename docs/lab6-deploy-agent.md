@@ -295,6 +295,20 @@ SUCCESS: Your application was provisioned and deployed to Azure.
 
 > The first deployment takes 3-5 minutes. Subsequent deployments are faster.
 
+### Alternative: Deploy with the Microsoft Foundry skill in GitHub Copilot
+
+Instead of running the `azd` commands yourself, you can let **GitHub Copilot** drive the deployment using the **Microsoft Foundry** skill that the Foundry Toolkit contributes to Copilot's **agent mode**.
+
+1. In VS Code, open **GitHub Copilot Chat** and switch the chat to **Agent** mode.
+2. Make sure the **Microsoft Foundry** tools (skill) are enabled in the tools/skills picker for the chat.
+3. Ask Copilot to deploy the agent, for example:
+
+   ```text
+   Deploy the hosted agent in src/agent to my Microsoft Foundry project.
+   ```
+
+4. Copilot uses the Microsoft Foundry skill to run the `azd` deployment steps for you. Review and **approve** each command it proposes (such as setting `FOUNDRY_PROJECT_ENDPOINT` and running `azd up`), and watch the deployment progress in the terminal.
+
 ---
 
 ## Step 5: Check Agent Status
@@ -365,24 +379,18 @@ azd ai agent invoke --new-session "Fresh conversation here"
 
 ---
 
-## Step 7: Test in the Microsoft Foundry Playground
+## Step 7: Test in the Foundry Toolkit Hosted Agents Playground
 
-The Foundry Playground at +++https://ai.azure.com+++ lets you interact with your deployed agent through a chat-style UI -- no CLI or code required. This is useful for quick testing, demos, and validating prompt behavior.
+The **Foundry Toolkit** extension in Visual Studio Code lets you interact with your deployed hosted agent through a chat-style **playground** -- right inside your editor, with no CLI, code, or web browser required. This is useful for quick testing, demos, and validating prompt behavior.
 
-### 7.1 -- Open the Playground
+### 7.1 -- Open the hosted agents playground
 
-1. Open in the browser +++https://ai.azure.com+++ and sign in with the same account used for **azd**
-2. In the top navigation, select your **build**. If you do not see it, click **All projects** and find it under your AI Services resource
-3. In the left sidebar, click **Agents**
-4. Find **zava-review-moderation-agent** in the agent list -- its status should show **Started**
-5. Click the agent name to open its detail page
-6. Click the **Try in Playground** button (or the **Playground** tab) to open the interactive chat UI
+1. In VS Code, click the **Foundry Toolkit** icon in the **Activity Bar** to open the toolkit panel. If prompted, sign in with the same Azure account used for **azd**
+2. Expand the **Agents** section to see the hosted agents in your Foundry project
+3. Find **zava-review-moderation-agent** in the agent list -- its status should show **Started**
+4. Select the agent and open it in the **Playground** to start the interactive chat UI
 
-> **Tip:** After **azd deploy**, the output includes a direct portal link. You can also get it with:
-> ```bash
-> azd ai agent show
-> ```
-> Look for the **playground** URL in the output.
+> **Tip:** If the agent does not appear yet, refresh the **Agents** view -- it can take a minute after deployment for the agent to register.
 
 ### 7.2 -- Test Classification Prompts
 
@@ -565,7 +573,7 @@ Before moving on, confirm:
 
 - [ ] azd ai agent show --output table shows **Status: active**
 - [ ] azd ai agent invoke "Love this cordless drill!" returns a JSON response with "classification": "SAFE"
-- [ ] The agent is visible in the Foundry Playground at +++https://ai.azure.com+++
+- [ ] The agent is visible in the **Agents** section of the Foundry Toolkit in VS Code and responds in its playground
 
 If the agent status shows an error, check the logs with azd **ai agent monitor** for details.
 
