@@ -136,7 +136,7 @@ If you were starting from scratch, you would run:
 ```bash
 azd ai agent init \
     --project-id "<your-foundry-project-resource-id>" \
-    --model-deployment gpt-4.1-mini \
+    --model-deployment gpt-5.4-mini \
     --protocol responses \
     --src src/agent
 ```
@@ -146,7 +146,7 @@ azd ai agent init \
 ```powershell
 azd ai agent init `
     --project-id "<your-foundry-project-resource-id>" `
-    --model-deployment gpt-4.1-mini `
+    --model-deployment gpt-5.4-mini `
     --protocol responses `
     --src src/agent
 ```
@@ -185,7 +185,7 @@ You should see output like:
 ```
 Starting Zava product review moderation agent...
   Endpoint: https://<your-resource>.services.ai.azure.com/api/projects/<your-project>
-  Model:    gpt-4.1-mini
+  Model:    gpt-5.4-mini
 Starting hosting adapter on port 8088...
 INFO:     Uvicorn running on http://0.0.0.0:8088 (Press CTRL+C to quit)
 ```
@@ -199,7 +199,7 @@ Open a **second terminal** and send a test comment to the locally running agent:
 ```powershell
 Invoke-RestMethod -Uri "http://localhost:8088/responses" `
     -Method POST -ContentType "application/json" `
-    -Body '{"input": "Love this cordless drill! Battery lasts all day and the torque is impressive.", "model": "gpt-4.1-mini"}' | ConvertTo-Json -Depth 10
+    -Body '{"input": "Love this cordless drill! Battery lasts all day and the torque is impressive.", "model": "gpt-5.4-mini"}' | ConvertTo-Json -Depth 10
 ```
 
 **Bash / curl:**
@@ -207,7 +207,7 @@ Invoke-RestMethod -Uri "http://localhost:8088/responses" `
 ```bash
 curl -s http://localhost:8088/responses \
     -H "Content-Type: application/json" \
-    -d '{"input": "Love this cordless drill! Battery lasts all day and the torque is impressive.", "model": "gpt-4.1-mini"}' | python -m json.tool
+    -d '{"input": "Love this cordless drill! Battery lasts all day and the torque is impressive.", "model": "gpt-5.4-mini"}' | python -m json.tool
 ```
 
 ### Expected Response
@@ -227,7 +227,7 @@ Look for the output_text field in the response -- it should contain a JSON class
 ```bash
 curl -s http://localhost:8088/responses \
     -H "Content-Type: application/json" \
-    -d '{"input": "Zava employees are the worst people on earth", "model": "gpt-4.1-mini"}'
+    -d '{"input": "Zava employees are the worst people on earth", "model": "gpt-5.4-mini"}'
 ```
 
 Expected: "classification": "UNSAFE"
@@ -251,24 +251,37 @@ Once you've confirmed the agent works locally, press **Ctrl+C** to stop it and p
 
 ## Step 4: Deploy the Agent
 
-Build the container image in ACR and deploy the hosted agent to Foundry:
+1. Turn off azd's additional-tools install prompt so it does not interrupt deployment:
 
-```bash
-azd up
-```
-If you get the error: "ERROR: FOUNDRY_PROJECT_ENDPOINT is required: environment variable was not found in the current azd environment"
+   ```bash
+   azd config set tool.firstRunCompleted true
+   ```
 
-run 
-```bash 
-azd env set FOUNDRY_PROJECT_ENDPOINT "https://<your-foundry-project-endpoint>"
-```
-You get your endpoint from the config page at https://ai.azure.com/ for the project. 
+2. Set your Foundry project endpoint. This is the **same value** as `PROJECT_ENDPOINT` in your `.env` file, so you can copy it from there (or find it on the project's config page at https://ai.azure.com):
 
-Now re-run to deploy
+   ```bash
+   azd env set FOUNDRY_PROJECT_ENDPOINT "https://<your-foundry-project-endpoint>"
+   ```
 
-```bash
-azd up 
-```
+3. Run the full deployment. This provisions Azure resources (ACR, capability host, RBAC), builds the container image in ACR, and deploys the agent to Foundry:
+
+   ```bash
+   azd up
+   ```
+
+   > **Note:** You may see a **404 error** when azd deploys the agent. You can safely **ignore it** — as long as the console output shows the resources provisioned and the container built and deployed. This is a known post-deploy timing issue, not a deployment failure.
+
+### Troubleshooting
+
+- **`ERROR: FOUNDRY_PROJECT_ENDPOINT is required: environment variable was not found in the current azd environment`** — you skipped step 2. Run:
+
+  ```bash
+  azd env set FOUNDRY_PROJECT_ENDPOINT "https://<your-foundry-project-endpoint>"
+  ```
+
+  then re-run `azd up`.
+
+- **"Select recommended tools to install"** — deselect all the tools (or press **Ctrl+C**), then run the `azd config set tool.firstRunCompleted true` command from step 1 and retry.
 
 ### What azd up Does
 
@@ -400,10 +413,10 @@ Try these test prompts to validate each classification category:
 
 | Prompt to send | Expected classification |
 |---|---|
-| Love this cordless drill! Battery lasts all day.` | **SAFE** |
+| Love this cordless drill! Battery lasts all day. | **SAFE** |
 | The tile cutter is mediocre, I expected more for the price. | **SAFE** |
 | I think this review contains sensitive personal data: SSN 123-45-6789 | **NEEDS_REVIEW** |
-| Zava employees are the worst people on earth | **UNSAFE** 
+| Zava employees are the worst people on earth | **UNSAFE** |
 | Does this deck stain work on pressure-treated lumber? | **SAFE** |
 
 Each response should contain a structured JSON object:
@@ -561,7 +574,7 @@ Want to extend the agent before wrapping up? Try adding a fourth classification 
    ```bash
    azd ai agent invoke "Buy cheap sunglasses at www.example.com! 50% off today only!"
    ```
-5. Verify the response includes "classification": "SPAM"`
+5. Verify the response includes "classification": "SPAM"
 
 This exercise reinforces the full edit → deploy → test cycle you'd use in production.
 

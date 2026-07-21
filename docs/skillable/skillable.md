@@ -31,8 +31,8 @@ The **Foundry Toolkit** extension is already installed on the lab virtual machin
     Username:  
     +++@lab.CloudPortalCredential(User1).Username+++
 
-    If prompted for a Temporary Access Password 'TAP'
-    +++@lab.CloudPortalCredential(User1).AccessToken+++
+If prompted for a Temporary Access Pass 'TAP':
++++@lab.CloudPortalCredential(User1).AccessToken+++
 
     If prompted for a Password: 
     +++@lab.CloudPortalCredential(User1).Password+++
@@ -58,12 +58,14 @@ Select a model to view its model card. Take note of the following properties.
 | **Token limits** | Varies by model (see model card) |
 
 ---
+---
 
 ## Step 3: Check model details
 
-For this workshop, you need a model that supports **chat completion**: the ability to accept a system prompt and user messages and return a structured response. The **gpt-4.1-mini** from Azure OpenAI is a high quality model that is also fast and cost-efficient, so we have already deployed it in the Foundry project for you.
+For this workshop, you need a model that supports **chat completion**: the ability to accept a system prompt and user messages and return a structured response. The **gpt-5.4-mini** from Azure OpenAI is a high quality model that is also fast and cost-efficient, so we have already deployed it in the Foundry project for you.
 
-Find **gpt-4.1-mini** in the catalog and open its model card to review:
+Find **gpt-5.4-mini** from the catalog and open the details page.
+Explore the tabs at the top:
 
 1. **Details**: Model description and capabilities
 2. **Benchmarks**: Scores and performance metrics
@@ -74,7 +76,7 @@ Find **gpt-4.1-mini** in the catalog and open its model card to review:
 
 ## Step 4: Explore the playground (Optional)
 
-1. From the **gpt-4.1-mini** model card, select **Try in Playground** (or, under **TOOLS** in the toolkit panel, open the **Playground** and choose the **gpt-4.1-mini** deployment). This opens the model playground inside VS Code.
+1. From the **gpt-5.4-mini** model card, select **Try in Playground** (or, under **TOOLS** in the toolkit panel, open the **Playground** and choose the **gpt-4.1-mini** deployment). This opens the model playground inside VS Code.
 2. In the **System prompt** (Instructions) field, enter:
 
 ```Instructions
@@ -112,6 +114,14 @@ This paint is garbage and whoever designed it should be fired
 
 # Lab 2: Set up VS Code
 
+> **Duration:** ~5 minutes
+
+## Objective
+
+Open the lab project in VS Code and validate that your environment is configured correctly — ensuring the **.env** file, dependencies, and CLI tools are all in place before you start writing code.
+
+---
+
 ## Step 1: Open the project in VS Code
 
 1. Open Visual Studio Code by launching it from the Start menu or desktop.
@@ -126,14 +136,13 @@ This paint is garbage and whoever designed it should be fired
 
 5. You should see the project files in the sidebar. 
 
+---
+
 ## Step 2: Validate the .env is correct
-
-
-## Step 2. Validate the .env is correct
 
 Ensure that the .env file has been created successfully in the root of your project:
 
-1. Open the `.env` file from the root of the project folder.
+1. Open the **.env** file from the root of the project folder.
 2. Confirm the following variables exist:
 
     ```
@@ -141,14 +150,14 @@ Ensure that the .env file has been created successfully in the root of your proj
     MODEL_DEPLOYMENT_NAME
     ```
 
-    You may also see `MODEL_DEPLOYMENT_NAME_2` and `AZURE_CONTAINER_REGISTRY_NAME`, which are optional variables for later sections, but they are not required.
+    You may also see **MODEL_DEPLOYMENT_NAME_2** and **AZURE_CONTAINER_REGISTRY_NAME**, which are optional variables for later sections, but they are not required.
 
-3. (Optional) Check the values of the variables are correct according to your Foundry project. `PROJECT_ENDPOINT` should match the project endpoint listed on https://ai.azure.com, and `MODEL_DEPLOYMENT_NAME` should match the name of the model deployment.
+3. (Optional) Check the values of the variables are correct according to your Foundry project. **PROJECT_ENDPOINT** should match the project endpoint listed on https://ai.azure.com, and **MODEL_DEPLOYMENT_NAME** should match the name of the model deployment.
 
 
---- 
-## Step 3: Validate your setup
-## Step 5: Validate your setup
+---
+
+## Step 3: Validate your setup
 
 Run the included validation script to confirm that all files, dependencies, CLI tools, and configuration are correct:
 
@@ -208,9 +217,9 @@ Write Python code that authenticates against your Foundry project, connects to a
 
 ## Step 1: Review the code
 
-Open `src/01_first_inference.py` in your editor. 
+Open **src/01_first_inference.py** in your editor. 
 
-The following sections walk through the code and explains the key concepts.
+The following sections walk through the code and explain the key concepts.
 
 ### Authentication and client setup
 
@@ -242,7 +251,7 @@ def main():
     )
 ```
 
-This creates a project client authenticated with your Azure credentials. The `PROJECT_ENDPOINT` comes from your `.env` file.
+This creates a project client authenticated with your Azure credentials. The **PROJECT_ENDPOINT** comes from your **.env** file.
 
 ### Getting an inference client
 
@@ -264,9 +273,9 @@ response = inference_client.chat.completions.create(
 )
 ```
 
-The `chat.completions.create()` method sends a chat completion request with:
+The **chat.completions.create()** method sends a chat completion request with:
 
-- **model** — The deployment name (e.g., gpt-4.1-mini)
+- **model** — The deployment name (e.g., gpt-5.4-mini)
 - **messages** — An array of conversation messages with roles (system, user, assistant)
 
 ### Processing the response
@@ -293,14 +302,14 @@ The response object contains an array of choices. Each choice has a message with
 
     ```output
     Connecting to Foundry project...
-    Sending inference request to model: gpt-4.1-mini
+    Sending inference request to model: gpt-5.4-mini
     ---
     Response:
     Microsoft Foundry is a unified platform for discovering, deploying, and
     managing AI models, which Zava could use to power product recommendations,
     review moderation, and customer support agents at scale.
     ---
-    Model: gpt-4.1-mini
+    Model: gpt-5.4-mini
     Tokens used: 52 (prompt: 30, completion: 22)
     ```
 
@@ -309,10 +318,10 @@ If the script fails, check if you're experiencing one of these issues:
 
 | Error | Cause | Fix |
 |-------|-------|-----|
-| KeyError: PROJECT_ENDPOINT | `.env` file is missing or incomplete | Run `azd env get-values > .env` to regenerate it |
-| AuthenticationError or DefaultAzureCredential failed | Azure CLI session expired | Run `az login` and try again |
+| KeyError: PROJECT_ENDPOINT | **.env** file is missing or incomplete | Run **azd env get-values > .env** to regenerate it |
+| AuthenticationError or DefaultAzureCredential failed | Azure CLI session expired | Run **az login** and try again |
 | Connection timed out after 30+ seconds | Endpoint is unreachable | Check your network/VPN; verify the endpoint URL in .env |
-| ResourceNotFoundError | Model deployment name does not match | Run `az cognitiveservices account deployment list` to check the exact name |
+| ResourceNotFoundError | Model deployment name does not match | Run **az cognitiveservices account deployment list** to check the exact name |
 
 ---
 
@@ -320,7 +329,7 @@ If the script fails, check if you're experiencing one of these issues:
 
 Now that your code is working, this step is about **actively testing changes and observing how the model behaves**.
 
-## How to experiment
+### How to experiment
 
 Follow a simple loop:
 
@@ -336,9 +345,9 @@ Follow a simple loop:
 
 ***
 
-## Experiments to try
+### Experiments to try
 
-### Change the system prompt
+#### Change the system prompt
 
 Edit the system message to control tone and behaviour:
 
@@ -354,7 +363,7 @@ Observe:
 
 ***
 
-### Change the user input
+#### Change the user input
 
 ```python
 {"role": "user", "content": "I'm Bruno and I'm renovating my kitchen. What tools do I need to install new cabinets?"},
@@ -373,7 +382,7 @@ Try variations:
 
 ***
 
-### Add temperature control
+#### Add temperature control
 
 The temperature parameter can be increased or decreased to vary the determinism of the LLM output. A temperature of 0.0 provides the most deterministic output (though not guaranteed to be 100% the same across runs), whereas the maximum temperature of 1.0 results in the least deterministic (most variable) output.
 
@@ -391,11 +400,11 @@ Observe:
 * Does creativity increase at higher values?
 * Does quality decrease at 1.0?
 
-For classification tasks later, always use `temperature=0.0`.
+For classification tasks later, always use **temperature=0.0**.
 
 ***
 
-### Add conversation context
+#### Add conversation context
 
 Extend messages to simulate a conversation:
 
@@ -414,7 +423,7 @@ Observe:
 * Does it give better follow-up answers?
 
 
-## What these experiments teach
+### What these experiments teach
 
 After running these experiments, you should have better intuition for:
 
@@ -426,7 +435,7 @@ After running these experiments, you should have better intuition for:
 
 ***
 
-### Break it on purpose
+#### Break it on purpose
 
 The experiments above focused on how the model responds to different inputs. This next set focuses on what happens when the **code itself** is misconfigured — missing environment variables, wrong model names, or broken imports. Try these changes one at a time (undo each before the next):
 
@@ -510,13 +519,13 @@ Zava's online store receives thousands of product reviews daily across hundreds 
 
 !IMAGE[architecture_lab520.png](instructions343795/architecture_lab520.png)
 
-This pipeline uses **prompt-based JSON**: the system prompt instructs the model to respond only with valid JSON. For even stricter guarantees, OpenAI models support [Structured Outputs](https://platform.openai.com/docs/guides/structured-outputs), a `response_format` parameter that constrains the model to conform to a JSON schema. This lab uses the prompt-based approach for simplicity and portability across model providers.
+This pipeline uses **prompt-based JSON**: the system prompt instructs the model to respond only with valid JSON. For even stricter guarantees, OpenAI models support [Structured Outputs](https://platform.openai.com/docs/guides/structured-outputs), a **response_format** parameter that constrains the model to conform to a JSON schema. This lab uses the prompt-based approach for simplicity and portability across model providers.
 
 ---
 
 ## Step 1: Review the system prompt
 
-The key to reliable moderation is a well-structured system prompt. Open `src/02_comment_moderation.py` and examine the `SYSTEM_PROMPT`:
+The key to reliable moderation is a well-structured system prompt. Open **src/02_comment_moderation.py** and examine the **SYSTEM_PROMPT**:
 
 ```python
 SYSTEM_PROMPT = """You are a product review moderation system for Zava, a global home-improvement retailer. Analyze the provided customer review and classify it.
@@ -642,10 +651,10 @@ python src/02_comment_moderation.py
 You should see output similar to the sample output below. Since LLMs are non-deterministic, the output will not 100% match. Validate that the message and formatting is similar.
 
 ```output
-========================================
-Zava Product Review Moderation System
-Model: gpt-4.1-mini
-========================================
+\========================================
+Comment Moderation System
+Model: gpt-5.4-mini
+\========================================
 
 Processing 5 sample reviews...
 
@@ -679,9 +688,9 @@ Classification: SAFE (confidence: 0.82)
 Reason:  Neutral product observation with mild criticism
 Action:  ✅ APPROVED
 
-========================================
+\========================================
 Summary
-========================================
+\========================================
 Total comments: 5
 APPROVED:          3
 FLAGGED_FOR_REVIEW: 1
@@ -694,7 +703,7 @@ BLOCKED:           1
 
 ## Step 4: Test with custom comments
 
-The application also accepts interactive input. Run it with the `--interactive` flag:
+The application also accepts interactive input. Run it with the **--interactive** flag:
 
 ```powershell
 python src/02_comment_moderation.py --interactive
@@ -709,13 +718,13 @@ Reason: Product complaint that could be constructive feedback or frustration
 Action: 🔍 FLAGGED_FOR_REVIEW
 ```
 
-Type `quit` to exit the interactive prompt, when you're done testing.
+Type **quit** to exit the interactive prompt, when you're done testing.
 
 ---
 
 ## Step 5: Test with the sample dataset
 
-The `src/sample_comments.json` file contains a broader set of test comments. Run the batch test:
+The **src/sample_comments.json** file contains a broader set of test comments. Run the batch test:
 
 ```powershell
 python src/02_comment_moderation.py --file src/sample_comments.json
@@ -725,7 +734,7 @@ python src/02_comment_moderation.py --file src/sample_comments.json
 
 ## Step 6: Customize the moderation logic
 
-Try adjusting the confidence thresholds in the `apply_moderation` function:
+Try adjusting the confidence thresholds in the **apply_moderation** function:
 
 | Threshold Change | Effect |
 |-----------------|--------|
@@ -777,8 +786,8 @@ Different models have different strengths:
 
 | Model | Strengths | Trade-offs |
 |-------|-----------|-----------|
-| gpt-4.1-mini | Fast, cost-efficient, good for simple tasks | May miss nuance in complex cases |
-| gpt-4.1 | Higher reasoning quality, better at edge cases | Slower, more expensive |
+| gpt-5.4-mini | Fast, cost-efficient, good for simple tasks | May miss nuance in complex cases |
+| gpt-5.4 | Higher reasoning quality, better at edge cases | Slower, more expensive |
 | Phi-4 | Open-weight, strong reasoning, runs on-device | May need different prompt tuning |
 
 Comparing models on your **actual Zava review data** helps make informed deployment decisions.
@@ -787,101 +796,33 @@ Comparing models on your **actual Zava review data** helps make informed deploym
 
 ## Prerequisites
 
-Login to your Azure Subscription 
-
-```Powershell
-az login 
-```
-**NOTE** This will open a login screen in a new window. Ensure you 'login with a work or school account' the login/authentication windows may be hidden behind your open windows. Minimize all open windows to see the authentication window. Once authenticated, maximize your VS Code window to continue.
-
-Username:  
-+++@lab.CloudPortalCredential(User1).Username+++
-
-If Prompted for a temporary Access Password 'TAP'
-+++@lab.CloudPortalCredential(User1).AccessToken+++
-
-If Prompted for a Password: 
-+++@lab.CloudPortalCredential(User1).Password+++
-
-You will now get a message: 
-The default subscription is marked with a *; the default tenant is ---- and subscription is ----
-
-Press 1 or Enter to select the subscription 
-
-### Validate the subscription is set
-
-Ensure your subscription is set to your subscription by running
-
-```Powershell
-az account set --subscription "@lab.CloudSubscription.Id"
-```
-
-This step is important to make sure all deployments and commands are executed against the correct Azure subscription where your Foundry resource is provisioned.
-
-To complete this lab, you need **two model deployments** in your Foundry project. Update your .env:
+To complete this lab, you need **two model deployments** in your Foundry project. Update your **.env** to add a new variable:
 
 ```.env
-MODEL_DEPLOYMENT_NAME=gpt-4.1-mini
-MODEL_DEPLOYMENT_NAME_2=gpt-4.1
+MODEL_DEPLOYMENT_NAME=gpt-5.4-mini
+MODEL_DEPLOYMENT_NAME_2=gpt-5.4
 ```
 
-You need to find your-foundry-resource-name and resource group name
+## Deploying a new model
 
-- Go to +++https://ai.azure.com+++
-- go to the **Operate** menu at the top 
-- select **Admin** left hand menu 
-- select your **Project** 
-- The resource group and foundry resource name are shown in this screen
+If you only have one model deployed, deploy a second one from the Foundry portal:
 
-## Deploying a new model 
+1. Go to +++https://ai.azure.com+++
+2. Open your **Project**
+3. Select **View Deployments** or **Models** from the left-hand menu
+4. Click **Deploy** > **Deploy a base model**
+5. Search for **gpt-5.4** and select it
+6. Select **Deploy** > **Default settings**
 
-If you only have one model deployed, deploy a second one using: 
+Wait for the deployment to complete before proceeding. You should see the playground once complete.
 
-Update the following with foundry resource name and resource group details 
-
-**PowerShell (Windows):**
-
-```powershell
-az cognitiveservices account deployment create `
-  --name <your-foundry-resource-name> `
-  --resource-group <rg-foundry-lab> `
-  --deployment-name gpt-4.1 `
-  --model-name gpt-4.1 `
-  --model-version "2025-04-14" `
-  --model-format OpenAI `
-  --sku-capacity 10 `
-  --sku-name "GlobalStandard"
-```
-
-**NOTE** The foundry resource name is the value of the 'parent resource' field in the resource screen on Skillable. 
-
-### Single-model alternative
-
-If you only have **one model** deployed, you can still get meaningful comparison insights by varying **how** you call it rather than **which** model you call. Try these experiments with src/02_comment_moderation.py:
-
-**1. Compare prompt strategies** — Edit the system prompt in classify_comment() to be stricter or more lenient:
-
-```python
-# Strict: lower tolerance
-"Classify as UNSAFE if there is any negativity or personal criticism."
-
-# Lenient: higher tolerance
-"Only classify as UNSAFE if the comment contains explicit threats or slurs."
-```
-
-Run the script with each prompt and compare how classifications change for the same comments.
-
-**2. Compare temperature settings** — Change temperature=0.0 to temperature=0.7 and run the moderation script several times. At 0.0, results should be identical every run; at 0.7, you may see classification drift on borderline comments.
-
-**3. Compare output formats** — Modify the system prompt to return a plain text label instead of JSON. Compare how reliably you can parse the response vs. the structured JSON approach.
-
-These experiments teach the same core lesson as multi-model comparison: **small changes in configuration produce measurably different results**, and you should test systematically before committing to a production setup.
+> **Note:** If you are unable to deploy a second model, skip this lab and proceed to Lab 6.
 
 ---
 
 ## Step 1: Review the comparison code
 
-Open src/03_model_comparison.py. The key function runs the same comment through multiple models:
+Open **src/03_model_comparison.py**. The key function runs the same comment through multiple models:
 
 ```python
 def compare_models(client, models: list[str], comment: str) -> list[dict]:
@@ -911,31 +852,31 @@ python src/03_model_comparison.py
 ### Expected output
 
 ```output
-========================================
+\========================================
   Model Comparison: Zava Review Moderation
-========================================
+\========================================
 
 Comment: "This paint is garbage and whoever designed it should be fired"
 
   Model         Classification  Confidence  Latency   Reason
   ------------- -------------- ----------  --------  ------
-  gpt-4.1-mini   NEEDS_REVIEW   0.75        324ms     Strong negative sentiment...
-  gpt-4.1        NEEDS_REVIEW   0.80        891ms     Borderline personal attack toward staff...
+  gpt-5.4-mini   NEEDS_REVIEW   0.75        324ms     Strong negative sentiment...
+  gpt-5.4        NEEDS_REVIEW   0.80        891ms     Borderline personal attack toward staff...
 
 Comment: "You're all idiots if you shop here — worst store ever"
 
   Model         Classification  Confidence  Latency   Reason
   ------------- -------------- ----------  --------  ------
-  gpt-4.1-mini   UNSAFE         0.95        298ms     Contains insults directed at customers
-  gpt-4.1        UNSAFE         0.98        845ms     Personal attacks targeting customers
+  gpt-5.4-mini   UNSAFE         0.95        298ms     Contains insults directed at customers
+  gpt-5.4        UNSAFE         0.98        845ms     Personal attacks targeting customers
 
-========================================
+\========================================
   Comparison Summary
-========================================
+\========================================
   Agreement rate: 100% (both models agreed on all classifications)
-  Avg latency - gpt-4.1-mini: 310ms
-  Avg latency - gpt-4.1:      868ms
-  Cost ratio:  gpt-4.1-mini is ~10x cheaper per token
+  Avg latency - gpt-5.4-mini: 310ms
+  Avg latency - gpt-5.4:      868ms
+  Cost ratio:  gpt-5.4-mini is ~10x cheaper per token
 ```
 
 ---
@@ -958,22 +899,25 @@ How much slower is the larger model? For real-time moderation (e.g., chat), late
 
 ### Cost
 
+> The per-token prices below are **illustrative** to demonstrate the cost-vs-quality trade-off. Check the [Azure OpenAI pricing page](https://azure.microsoft.com/pricing/details/cognitive-services/openai-service/) for current rates for **gpt-5.4-mini** and **gpt-5.4**.
+
 | Model | Input (per 1M tokens) | Output (per 1M tokens) |
 |-------|----------------------|----------------------|
-|gpt-4.1-mini | ~$0.15 | ~$0.60 |
-|gpt-4.1 | ~$2.50 | ~$10.00 |
+|gpt-5.4-mini | ~$0.15 | ~$0.60 |
+|gpt-5.4 | ~$2.50 | ~$10.00 |
 
 **Estimating your lab cost:** Each moderation request uses roughly 250 input tokens (system prompt + comment) and 50 output tokens (JSON response). With 5 sample comments across 2 models, that is 10 requests total:
 
 | | Input tokens | Output tokens | Cost per 1M tokens (input/output) | Estimated cost |
 |---|---|---|---|---|
-| gpt-4.1-mini | 5 × 250 = 1,250 | 5 × 50 = 250 | $0.15 / $0.60 | **$0.0003** |
-| gpt-4.1 | 5 × 250 = 1,250 | 5 × 50 = 250 | $2.50 / $10.00 | **$0.006** |
+| gpt-5.4-mini | 5 × 250 = 1,250 | 5 × 50 = 250 | $0.15 / $0.60 | **$0.0003** |
+| gpt-5.4 | 5 × 250 = 1,250 | 5 × 50 = 250 | $2.50 / $10.00 | **$0.006** |
 | **Total for this lab** | | | | **< $0.01** |
 
-Even running the full sample_comments.json (15 Zava reviews × 2 models = 30 requests) stays well under $0.01. The cost difference becomes meaningful at Zava's scale — at 100,000 reviews/day, gpt-4.1-mini costs ~$5/day vs. gpt-4.1 at ~$80/day.
+Even running the full sample_comments.json (15 Zava reviews × 2 models = 30 requests), the inference cost stays well under $0.01. The cost difference becomes meaningful at Zava's scale — at 100,000 reviews/day, gpt-5.4-mini costs ~$5/day vs. gpt-5.4 at ~$80/day.
 
-> **Tip:** For this type of classification task, gpt-4.1-mini often matches gpt-4.1 performance at a fraction of the cost.
+
+> **Tip:** For this type of classification task, gpt-5.4-mini often matches gpt-5.4 performance at a fraction of the cost.
 
 ---
 
@@ -987,7 +931,7 @@ The comparison script includes a --hybrid mode:
 python src/03_model_comparison.py --hybrid
 ```
 
-This runs gpt-4.1-mini first. If confidence is below 0.8, it re-runs with gpt-4.1 for a second opinion.
+This runs gpt-5.4-mini first. If confidence is below 0.8, it re-runs with gpt-5.4 for a second opinion.
 
 ---
 
@@ -1026,7 +970,7 @@ If you finish early, try these:
 
 ## Objective
 
-Deploy Zava's product review moderation logic from Lab 4 as a **hosted agent** on Microsoft Foundry Agent Service using the Azure Developer CLI (`azd ai agent`). This turns the local Python script into a persistent, cloud-hosted service that can scale to handle Zava's daily review volume. The entire workflow — initialization, build, deploy, invoke, monitor, and cleanup — is driven by CLI commands.
+Deploy Zava's product review moderation logic from Lab 4 as a **hosted agent** on Microsoft Foundry Agent Service using the Azure Developer CLI (**azd ai agent**). This turns the local Python script into a persistent, cloud-hosted service that can scale to handle Zava's daily review volume. The entire workflow — initialization, build, deploy, invoke, monitor, and cleanup — is driven by CLI commands.
 
 ---
 
@@ -1040,13 +984,13 @@ Foundry handles the heavy lifting of hosting an agent:
 - **REST API**: a protocol library exposes your agent as an OpenAI Responses API endpoint, callable by the Foundry Playground, other agents, or any application.
 - **Per-session scaling**: the platform creates a sandbox on demand for each session and tears it down when idle (no replica counts to configure).
 - **Dedicated agent identity**: each agent gets its own Microsoft Entra ID, which it uses to authenticate to Foundry models and downstream Azure services (no keys to manage).
-- **Full lifecycle via CLI**: the `azd` CLI handles all steps: init → deploy → invoke → monitor → cleanup.
+- **Full lifecycle via CLI**: the **azd** CLI handles all steps: init → deploy → invoke → monitor → cleanup.
 
 ---
 
 ## Architecture
 
-The `azd` CLI turns your agent code into a container image, pushes it to Azure Container Registry, and deploys it to Foundry Agent Service. At runtime, the platform pulls the image, provisions a sandbox, and exposes a dedicated endpoint that your agent uses to call Foundry models.
+The **azd** CLI turns your agent code into a container image, pushes it to Azure Container Registry, and deploys it to Foundry Agent Service. At runtime, the platform pulls the image, provisions a sandbox, and exposes a dedicated endpoint that your agent uses to call Foundry models.
 
 !IMAGE[mermaid_diagram2.png](instructions343795/mermaid_diagram2.png)
 
@@ -1059,13 +1003,13 @@ The `azd` CLI turns your agent code into a container image, pushes it to Azure C
   azd ext install azure.ai.agents
   azd ext upgrade azure.ai.agents
   ```
-- `.env` file with `PROJECT_ENDPOINT` and `MODEL_DEPLOYMENT_NAME` set
+- **.env** file with **PROJECT_ENDPOINT** and **MODEL_DEPLOYMENT_NAME** set
 
 ---
 
 ## Step 1: Review the agent code
 
-The agent source code lives in `src/agent/` and consists of three files: `app.py`, `Dockerfile` and `agent.yml`:
+The agent source code lives in **src/agent/** and consists of three files: **app.py**, **Dockerfile** and **agent.yaml**:
 
 ### The agent: src/agent/app.py
 
@@ -1101,7 +1045,7 @@ Open the file locally to see the complete file.
 
 ### The container definition: src/agent/Dockerfile
 
-This file builds a container with a Python 3.12 installation and packages installed from `requirements.txt`.
+This file builds a container with a Python 3.12 installation and packages installed from **requirements.txt**.
 
 ```dockerfile
 FROM python:3.12-slim
@@ -1133,41 +1077,49 @@ environment_variables:
 
 ---
 
-## Reference: How to initialize a hosted agent project
+## Reference: How the agent project was initialized and deployed
 
-> **Skip this step** — the repo already includes the agent files and `azure.yaml` configuration. This section is here for reference only, so you understand how it was set up.
+> **Don't run these commands!** The lab environment has already run both **azd ai agent init** and **azd up** for you. This section explains what was done, so you understand the full workflow.
 
-If you were starting from scratch, you would run:
+### Initialization (azd ai agent init)
 
-**Bash (Mac/Linux):**
-
-```bash
-azd ai agent init \
-    --project-id "<your-foundry-project-resource-id>" \
-    --model-deployment gpt-4.1-mini \
-    --protocol responses \
-    --src src/agent
-```
-
-**PowerShell (Windows):**
+To scaffold the hosted agent project, the following command was run:
 
 ```powershell
 azd ai agent init `
     --project-id "<your-foundry-project-resource-id>" `
-    --model-deployment gpt-4.1-mini `
+    --model-deployment gpt-5.4-mini `
     --protocol responses `
     --src src/agent
 ```
 
 This command:
+
 1. Detects your existing Foundry project and ACR
 2. Generates agent.yaml with the agent manifest
 3. Registers the agent as a service in azure.yaml
 4. Sets all required azd environment variables
 
+### Deployment (azd up)
+
+After initialization, this command was run to deploy the agent:
+
+```powershell
+azd up
+```
+
+The **azd up** command executes a multi-step process:
+
+1. **Provisions**: Creates/updates infrastructure (ACR, capability host, RBAC)
+2. **Builds**: Sends src/agent/ to ACR for a remote Docker build
+3. **Deploys**: Registers a hosted agent version on Foundry Agent Service
+4. **Starts**: Launches the container and waits for it to be ready
+
+To see the full output from the **azd up** deployment that was run in this lab environment, open the **lifecycle** text file on the Desktop.
+
 ---
 
-## Step 3: Test the agent locally
+## Step 3: Test the local agent
 
 Before deploying to the cloud, validate that the agent runs correctly on your machine. This catches import errors, configuration issues, and logic bugs early.
 
@@ -1188,14 +1140,14 @@ cd src/agent
 python app.py
 ```
 
-If you see a dialog about allowing Python network access, allow it.
+If you see a dialog about allowing network access, select **Allow**.
 
 You should see output like:
 
 ```output
 Starting Zava product review moderation agent...
   Endpoint: https://<your-resource>.services.ai.azure.com/api/projects/<your-project>
-  Model:    gpt-4.1-mini
+  Model:    gpt-5.4-mini
 Starting hosting adapter on port 8088...
 INFO:     Uvicorn running on http://0.0.0.0:8088 (Press CTRL+C to quit)
 ```
@@ -1210,7 +1162,7 @@ Invoke-RestMethod -Uri "http://localhost:8088/responses" `
     -Body '{"input": "Love this cordless drill! Battery lasts all day and the torque is impressive."}' | ConvertTo-Json -Depth 10
 ```
 
-The response is an OpenAI Responses API object. Look for the `text` field inside `output[].content[]` — it contains the agent's classification as escaped JSON:
+The response is an OpenAI Responses API object. Look for the **text** field inside **output[].content[]** — it contains the agent's classification as escaped JSON:
 
 ```json
 {
@@ -1251,19 +1203,15 @@ Once you've confirmed the agent works locally, proceed to cloud deployment.
 
 ---
 
-## Step 4: Deploy the agent
+## Step 4: Test the deployed agent
 
-1. Run the following command to turn off additional tools installations for azd:
+The agent has already been deployed to Foundry Agent Service in this lab environment using **azd up**. You can review the full deployment output by opening the **lifecycle-log** text file on the Desktop.
 
-    ```powershell
-    azd config set tool.firstRunCompleted true
-    ```
+Before running any **azd ai agent** commands, set your environment endpoint so the CLI knows which Foundry project to target:
 
-2. Run the following command to set your environment endpoint:
-
-    ```powershell
-    azd env set FOUNDRY_PROJECT_ENDPOINT "https://<your-foundry-project-endpoint>"
-    ```
+```powershell
+azd env set FOUNDRY_PROJECT_ENDPOINT "https://<your-foundry-project-endpoint>"
+```
 
     This is the same endpoint as `PROJECT_ENDPOINT` in the `.env` file, so you can copy from there.
 
@@ -1334,7 +1282,7 @@ Deploy the hosted agent in src/agent to my Microsoft Foundry project.
 Verify the agent is running:
 
 ```powershell
-azd ai agent show
+azd ai agent show --output table
 ```
 
 Expected output includes:
@@ -1450,7 +1398,7 @@ Non-English:
 
 Check that the agent returns valid JSON for every input and that the **confidence** score reflects ambiguity (lower confidence for borderline cases).
 
-> **Troubleshooting:** If the Playground shows the agent as **Stopped** or **Activating**, wait 1-2 minutes — the container may still be starting. Check status with `azd ai agent show` from the CLI.
+> **Troubleshooting:** If the Playground shows the agent as **Stopped** or **Activating**, wait 1-2 minutes — the container may still be starting. Check status with **azd ai agent show** from the CLI.
 
 ---
 
@@ -1514,15 +1462,15 @@ azd ai agent monitor --follow
 
 Want to extend the agent before wrapping up? Try adding a fourth classification category:
 
-1. **Edit the system prompt** in `src/agent/app.py` — add SPAM to the list of valid classifications, with a description like: *"SPAM: Promotional, advertising, or off-topic content unrelated to the product being reviewed."*
+1. **Edit the system prompt** in **src/agent/app.py** — add SPAM to the list of valid classifications, with a description like: *"SPAM: Promotional, advertising, or off-topic content unrelated to the product being reviewed."*
 2. **Update the business logic** — decide what action SPAM reviews should get (e.g., FLAGGED_FOR_REVIEW or a new QUARANTINED action)
-3. **Redeploy** — run `azd deploy` to push your changes to the hosted agent
+3. **Redeploy** — run **azd deploy** to push your changes to the hosted agent
 4. **Test** — invoke the agent with a spammy review:
 
    ```powershell
    azd ai agent invoke "Buy cheap sunglasses at www.example.com! 50% off today only!"
    ```
-5. Verify the response includes `"classification": "SPAM"`
+5. Verify the response includes **"classification": "SPAM"**
 
 ---
 
@@ -1571,7 +1519,7 @@ Across six labs, you constructed a **product review moderation pipeline** end-to
 |---|---|
 | **What you did** | Browsed the Foundry model catalog in the Foundry Toolkit for VS Code, evaluated model properties, tested Zava review moderation prompts in the playground |
 | **Key skill** | Selecting the right model for a task based on capabilities, pricing, and quotas |
-| **Outcome** | Chose **gpt-4.1-mini** as the model for Zava's review moderation |
+| **Outcome** | Chose **gpt-5.4-mini** as the model for Zava's review moderation |
 
 **Core concept:** Not all models are equal — task type, latency, cost, and region availability all factor into model selection for enterprise workloads like Zava's.
 
@@ -1617,7 +1565,7 @@ Across six labs, you constructed a **product review moderation pipeline** end-to
 
 | | |
 |---|---|
-| **What you did** | Ran the same Zava review moderation prompts through gpt-4.1-mini and gpt-4.1, compared quality, latency, and cost |
+| **What you did** | Ran the same Zava review moderation prompts through gpt-5.4-mini and gpt-5.4, compared quality, latency, and cost |
 | **Key skill** | Multi-model evaluation, cost-performance trade-off analysis, hybrid escalation patterns |
 | **Outcome** | A comparison script (src/03_model_comparison.py) with side-by-side results and an optional hybrid routing mode |
 

@@ -77,7 +77,7 @@ def test_file_structure():
         "scripts/postprovision.sh",
         # Labs
         "docs/lab1-discover-models.md",
-        "docs/lab2-project-setup.md",
+        "docs/lab2-verifysetup.md",
         "docs/lab3-connect-and-infer.md",
         "docs/lab4-comment-moderation.md",
         "docs/lab5-model-comparison.md",
@@ -186,8 +186,8 @@ def test_markdown_links():
     # Expected navigation: Setup → Lab1 → Lab2 → Lab3 → Lab4 → Lab5 → Lab6 → Lab7 → Cleanup
     nav_chain = [
         ("setup/SETUP.md", "docs/lab1-discover-models.md"),
-        ("docs/lab1-discover-models.md", "docs/lab2-project-setup.md"),
-        ("docs/lab2-project-setup.md", "docs/lab3-connect-and-infer.md"),
+        ("docs/lab1-discover-models.md", "docs/lab2-verifysetup.md"),
+        ("docs/lab2-verifysetup.md", "docs/lab3-connect-and-infer.md"),
         ("docs/lab3-connect-and-infer.md", "docs/lab4-comment-moderation.md"),
         ("docs/lab4-comment-moderation.md", "docs/lab5-model-comparison.md"),
         ("docs/lab5-model-comparison.md", "docs/lab6-deploy-agent.md"),
@@ -218,7 +218,7 @@ def test_model_references():
     print("=" * 60)
 
     # Ensure deprecated model names are gone
-    deprecated = ["gpt-4o-mini", "gpt-4o"]
+    deprecated = ["gpt-4o-mini", "gpt-4o", "gpt-4.1-mini", "gpt-4.1", "gpt-5.3-chat", "gpt-5-chat"]
     all_files = list(REPO_ROOT.rglob("*"))
     # Exclude this validation script itself — it contains deprecated names as test data
     self_path = Path(__file__).resolve()
@@ -251,12 +251,12 @@ def test_model_references():
 
     # Ensure new model names are present where expected
     expected_model_refs = {
-        "gpt-4.1-mini": [
+        "gpt-5.4-mini": [
             "infra/main.bicep",
             ".env.sample",
             "src/agent/app.py",
         ],
-        "gpt-4.1": [
+        "gpt-5.4": [
             "infra/main.bicep",
             ".env.sample",
         ],

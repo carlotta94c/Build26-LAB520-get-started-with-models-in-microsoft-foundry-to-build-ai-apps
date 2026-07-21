@@ -40,7 +40,7 @@ Across six labs, you -- as Serena, a developer at Zava -- constructed a **produc
 |---|---|
 | **What you did** | Browsed the Foundry model catalog in the Foundry Toolkit for VS Code, evaluated model properties, tested Zava review moderation prompts in the playground |
 | **Key skill** | Selecting the right model for a task based on capabilities, pricing, and quotas |
-| **Outcome** | Chose **gpt-4.1-mini** as the model for Zava's review moderation |
+| **Outcome** | Chose **gpt-5.4-mini** as the model for Zava's review moderation |
 
 **Core concept:** Not all models are equal -- task type, latency, cost, and region availability all factor into model selection for enterprise workloads like Zava's.
 
@@ -86,7 +86,7 @@ Across six labs, you -- as Serena, a developer at Zava -- constructed a **produc
 
 | | |
 |---|---|
-| **What you did** | Ran the same Zava review moderation prompts through gpt-4.1-mini and gpt-4.1, compared quality, latency, and cost |
+| **What you did** | Ran the same Zava review moderation prompts through gpt-5.4-mini and gpt-5.4, compared quality, latency, and cost |
 | **Key skill** | Multi-model evaluation, cost-performance trade-off analysis, hybrid escalation patterns |
 | **Outcome** | A comparison script (src/03_model_comparison.py) with side-by-side results and an optional hybrid routing mode |
 
@@ -137,7 +137,7 @@ By completing this workshop, you gained hands-on experience with:
 
 The final system you built spans local development and Azure cloud services:
 
-![mermaid_diagram4.png](.images/mermaid_diagram4.png)
+![mermaid_diagram4.png](./images/mermaid_diagram4.png)
 ---
 
 ## Key Files You Created or Modified
@@ -195,7 +195,7 @@ A complete reference of every CLI command used across the workshop:
 | python src/01_first_inference.py | 3 | Run first inference script |
 | python src/02_comment_moderation.py | 4 | Run moderation pipeline |
 | python src/03_model_comparison.py | 5 | Run model comparison |
-| python src/agent/app.py` | 6 | Run agent locally |
+| python src/agent/app.py | 6 | Run agent locally |
 | azd up | 6 | Provision + build + deploy |
 | azd deploy | 6 | Rebuild and redeploy |
 | azd ai agent show | 6 | Check agent status |
@@ -325,6 +325,6 @@ Please leave feedback for the lab experience.
 ![feedback.png](./images/feedback.png)
 
 If you encountered any issues during this lab or would like to try it self paced see 
-![issues.png](./images//issues.png)
+![issues.png](./images/issues.png)
 
 **Happy building!**

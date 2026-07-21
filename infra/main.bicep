@@ -13,10 +13,10 @@ param environmentName string
 param location string
 
 @description('Name of the model to deploy')
-param modelName string = 'gpt-4.1-mini'
+param modelName string = 'gpt-5.4-mini'
 
 @description('Version of the model to deploy')
-param modelVersion string = '2025-04-14'
+param modelVersion string = '2026-03-17'
 
 @description('Model format (OpenAI for GPT models)')
 param modelFormat string = 'OpenAI'
@@ -31,10 +31,10 @@ param modelCapacity int = 10
 param deploySecondModel bool = false
 
 @description('Second model name (for comparison lab)')
-param secondModelName string = 'gpt-4.1'
+param secondModelName string = 'gpt-5.4'
 
 @description('Second model version')
-param secondModelVersion string = '2025-04-14'
+param secondModelVersion string = '2026-03-05'
 
 @description('Second model capacity')
 param secondModelCapacity int = 10
@@ -42,8 +42,19 @@ param secondModelCapacity int = 10
 @description('Id of the user or app to assign application roles')
 param principalId string = ''
 
+@description('Type of the principal referenced by principalId (User, ServicePrincipal, or Group)')
+@allowed([
+  'User'
+  'ServicePrincipal'
+  'Group'
+])
+param principalType string = 'User'
+
 @description('Enable hosted agent infrastructure (ACR + capability host) for Lab 6')
 param enableHostedAgents bool = false
+
+@description('Enable the capability host for supporting BYO storage of agent conversations. When false and hosted agents are enabled, the capability host is not created.')
+param enableCapabilityHost bool
 
 // ---------------------------------------------------------------------------
 // Variables
@@ -101,6 +112,7 @@ module aiServices './modules/ai-services.bicep' = {
     secondModelVersion: secondModelVersion
     secondModelCapacity: secondModelCapacity
     enableHostedAgents: enableHostedAgents
+    enableCapabilityHost: enableCapabilityHost
   }
 }
 
@@ -112,6 +124,7 @@ module roleAssignments './modules/role-assignments.bicep' = if (!empty(principal
   scope: rg
   params: {
     principalId: principalId
+    principalType: principalType
     aiServicesName: aiServices.outputs.aiServicesName
     acrName: enableHostedAgents ? aiServices.outputs.acrName : ''
   }

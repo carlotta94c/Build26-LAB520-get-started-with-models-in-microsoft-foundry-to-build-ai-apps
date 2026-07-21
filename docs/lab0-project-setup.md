@@ -43,6 +43,14 @@ The fastest way to provision everything is the included setup script. From the *
 ./scripts/setup.sh
 ```
 
+> **Windows — script blocked? (self-study only)** If you see *"…setup.ps1 is not digitally signed"* or *"running scripts is disabled on this system"*, your PowerShell execution policy is blocking unsigned scripts. Run this once in the same terminal first, then re-run the setup script:
+>
+> ```powershell
+> Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force
+> ```
+>
+> It applies only to the current session and its child processes (including the azd post-provision hook), so it also prevents the same error during `azd up`.
+
 This script will:
 
 1. Verify all prerequisites (Azure CLI, azd, Python)
@@ -60,7 +68,7 @@ This script will:
 | Flag | Effect |
 |------|--------|
 | `-Location swedencentral` / `-l swedencentral` | Deploy to a different region |
-| `-DeploySecondModel` / `-s` | Also deploy `gpt-4.1` for Lab 5 comparison |
+| `-DeploySecondModel` / `-s` | Also deploy `gpt-5.4` for Lab 5 comparison |
 | `-SkipProvision` / `--skip-provision` | Skip Azure provisioning (if resources already exist) |
 
 After the script completes, skip to **Step 8: Verify in Foundry Portal** and then **Step 9: Validate Your Setup** below.
@@ -135,13 +143,21 @@ azd env set AZURE_PRINCIPAL_ID <your-principal-id>
 
 ### Step 5: (Optional) Enable Second Model for Lab 5
 
-To deploy `gpt-4.1` alongside `gpt-4.1-mini` for the model comparison lab:
+To deploy `gpt-5.4` alongside `gpt-5.4-mini` for the model comparison lab:
 
 ```bash
 azd env set DEPLOY_SECOND_MODEL true
 ```
 
 ### Step 6: Provision Infrastructure
+
+> **First time using azd? (self-study only)** Disable the one-time tools check so it does not interrupt provisioning:
+>
+> ```bash
+> azd config set tool.firstRunCompleted true
+> ```
+>
+> (Or set `AZD_SKIP_FIRST_RUN=true` for the current session.)
 
 ```bash
 azd provision --no-prompt
@@ -154,8 +170,8 @@ This deploys the Bicep templates in `infra/` and creates:
 | Resource group (`rg-foundry-lab`) | Container for all resources |
 | Azure AI Services account | Foundry account (model host) |
 | Foundry project | Organizes models, agents, evaluations |
-| `gpt-4.1-mini` deployment | Primary model for Labs 3-4 |
-| `gpt-4.1` deployment *(optional)* | Second model for Lab 5 |
+| `gpt-5.4-mini` deployment | Primary model for Labs 3-4 |
+| `gpt-5.4` deployment *(optional)* | Second model for Lab 5 |
 | Log Analytics workspace | Telemetry storage |
 | Application Insights | Project monitoring |
 | RBAC role assignments | Your user gets OpenAI User + Contributor |
@@ -184,7 +200,7 @@ Key outputs:
 |----------|-------------|---------|
 | `AZURE_AI_PROJECT_ENDPOINT` | Your project endpoint URL | `https://ai-xxxx.services.ai.azure.com/api/projects/foundry-lab-project` |
 | `AZURE_RESOURCE_GROUP` | Resource group name | `rg-foundry-lab` |
-| `MODEL_DEPLOYMENT_NAME` | Primary model | `gpt-4.1-mini` |
+| `MODEL_DEPLOYMENT_NAME` | Primary model | `gpt-5.4-mini` |
 
 Check that `.env` was written:
 
@@ -228,8 +244,9 @@ You should see output ending with:
 ```
   VALIDATION SUMMARY
   Total checks: 100
-  ✅ Passed:  100
-  ❌ Failed:  0
+  Passed:  99
+  Failed:  0
+  Skipped: 1
 
   Result: PASS  - lab is ready!
 ```
@@ -242,6 +259,7 @@ If any checks fail, the output tells you exactly what to fix. Common issues:
 | CLI not found | Install the missing tool (see [SETUP.md](../setup/SETUP.md)) |
 | Package not installed | Run `pip install -r requirements.txt` inside your `.venv` |
 | `.env` not configured | Copy `.env.sample` to `.env` and fill in your endpoint |
+| `.ps1 is not digitally signed` (Windows) | Run `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force`, then re-run |
 
 > **Tip:** Re-run validation after any fix to confirm it resolves the issue.
 

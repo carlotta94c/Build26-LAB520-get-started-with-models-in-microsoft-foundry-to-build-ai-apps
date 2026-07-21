@@ -1,7 +1,3 @@
-## Welcome to Your Lab Environment
-
-To begin, log into the virtual machine using the following credentials: +++@lab.VirtualMachine(Win11-Pro-Base).Password+++
-
 # Lab 1: Discover Models in Microsoft Foundry
 
 > **Duration:** ~10 minutes | **Phase:** Orientation (UI)
@@ -35,18 +31,16 @@ The toolkit panel is the central hub for browsing models, testing them in a play
 1. In the Foundry Toolkit panel, under **MODELS**, select **Catalog** to open the model catalog view -- these are production-ready, hosted models you can use without fine-tuning.
 2. Browse the available models. Use the filters at the top of the catalog to narrow the list -- for example, by model types **capabilities**, **Inference task**, **Chat Completion**, **Image Analysis**, or by where the model is **hosted by** (such as Microsoft Foundry). This lets you quickly filter models based on a specific task or requirement.
 
-Select a Model to view the Model Card
+Select a model to view the details page. Take note of the following properties in the side box.
 
-Take note of the following for each model:
-
-| Property | What to Look For |
+| Property | Common values |
 |----------|-----------------|
-| **Publisher** | OpenAI, Microsoft, Meta, Mistral, etc. |
-| **Task type** | Chat completion, text generation, embeddings |
-| **Deployment options** | Serverless API, managed compute |
-| **Pricing tier** | Pay-as-you-go, free playground |
-| **Benchmarks** | Model performance and stats|
-| **Responsible AI** | Prompts and completions are passed through a default configuration of Azure AI Content Safety classification models |
+| **Model provider** | Azure OpenAI, Microsoft AI, Meta, Mistral, etc. |
+| **Task type** | Chat completion, Responses, Text to image |
+| **Input type** | text, image |
+| **Output type** | text, image |
+| **Context window** | Varies by model (see model card) |
+| **Token limits** | Varies by model (see model card) |
 
 ---
 
@@ -58,30 +52,34 @@ For this workshop, you need a model that supports **chat completion** -- the abi
 
 | Model | Publisher | Why |
 |-------|-----------|-----|
-| gpt-4.1-mini | OpenAI | Fast, cost-efficient, excellent for classification |
-| gpt-4.1 | OpenAI | Higher quality, good for complex moderation |
+| gpt-5.4-mini | OpenAI | Fast, cost-efficient, excellent for classification |
+| gpt-5.4 | OpenAI | Higher quality, good for complex moderation |
 | Phi-4 | Microsoft | Strong reasoning, open-weight |
 
-> **Tip:** gpt-4.1-mini is the best choice for this lab -- it is fast, inexpensive, and well-suited for moderation and classification tasks.
+> **Tip:** gpt-5.4-mini is the best choice for this lab -- it is fast, inexpensive, and well-suited for moderation and classification tasks.
 
 ---
 
 ## Step 4: Check Model Details
 
-Click on your chosen model (e.g., **gpt-4.1-mini**) in the catalog to view its model card:
+For this workshop, you need a model that supports **chat completion** -- the ability to accept a system prompt and user messages and return a structured response. The **gpt-5.4-mini** model from Azure OpenAI is high quality, fast, and cost-efficient, which makes it ideal for Zava's review moderation pipeline.
 
-1. **Details** Read the model description and capabilities
-2. **Benchmarks** -- Review performance metrics
-3. **License** -- The Model License
+Find **gpt-5.4-mini** in the catalog and open its detail page. Explore the tabs at the top:
 
-> You will deploy this model programmatically in Lab 2. For now, just confirm it is available in the catalog and you can see the model card details.
+1. **Details** -- Model description and capabilities
+2. **Deployments** -- A list of current deployments of this model
+3. **Benchmarks** -- Scores and performance metrics
+4. **Responsible AI** -- Guardrails imposed on the model from Azure AI Content Safety
+5. **License** -- Links to applicable licensing terms
+
+> You will deploy this model programmatically in Lab 2. For now, just confirm it is available in the catalog and you can review the model card details.
 
 ---
 
 
 ## Step 5: Explore the Playground (Optional)
 
-1. From the **gpt-4.1-mini** model card, select **Try in Playground** (or open the **Playground** under **TOOLS** in the toolkit panel and choose the gpt-4.1-mini deployment). This opens the model playground inside VS Code.
+1. From the **gpt-5.4-mini** model card, select **Try in Playground** (or open the **Playground** under **TOOLS** in the toolkit panel and choose the gpt-4.1-mini deployment). This opens the model playground inside VS Code.
 2. In the **System prompt** (instructions), enter:
 
 ```
