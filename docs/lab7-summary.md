@@ -98,11 +98,11 @@ Across six labs, you -- as Serena, a developer at Zava -- constructed a **produc
 
 | | |
 |---|---|
-| **What you did** | Packaged Zava's review moderation logic as a Docker container, deployed it to Foundry Agent Service with **azd up** (or the Microsoft Foundry skill in GitHub Copilot), tested via CLI and the Foundry Toolkit hosted agents playground |
+| **What you did** | Packaged Zava's review moderation logic as a Docker container, tested it locally with the **Agent Inspector**, deployed it to Foundry Agent Service **from within the Foundry Toolkit** (Deploy button), and tested via the hosted agents playground |
 | **Key skill** | Containerized agent deployment, the Agent Framework SDK, hosted agent lifecycle management |
 | **Outcome** | A live, cloud-hosted Zava review moderation agent accessible via the OpenAI Responses API |
 
-**Core concept:** A hosted agent turns Serena's local Python code into a managed, scalable service -- no infrastructure management, just azd up.
+**Core concept:** A hosted agent turns the local Python code into a managed, scalable service -- no infrastructure management, deployed straight from the Foundry Toolkit.
 
 ---
 
@@ -126,8 +126,8 @@ By completing this workshop, you gained hands-on experience with:
 ### Agent Development & Deployment
 - Using the Microsoft Agent Framework (Agent, FoundryChatClient)
 - Writing a Dockerfile and agent.yaml manifest
-- Local testing before cloud deployment
-- Deploying containerized agents to Foundry Agent Service
+- Local testing with the Foundry Toolkit Agent Inspector before cloud deployment
+- Deploying containerized agents to Foundry Agent Service from within the Foundry Toolkit
 - Invoking and monitoring agents via azd ai agent CLI
 - Testing agents in the Foundry Toolkit hosted agents playground
 
