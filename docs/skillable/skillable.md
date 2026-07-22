@@ -4,7 +4,7 @@
 
 To begin, log into the virtual machine using the following credentials: +++@lab.VirtualMachine(Win11-Pro-Base).Password+++
 
-# Part 1: Discover Microsoft Foundry hosted models
+# Part 1: Discover Foundry-hosted models
 
 > **Duration:** ~10 minutes
 
@@ -1243,11 +1243,7 @@ Once you tested your agent locally, you can deploy the hosted agent **from insid
 
 In the deployment configuration dialog, you can optionally change the agent name, deployment method, CPU and memory quotas. For the sake of this lab, leave the defaults and click **Deploy**.
 
-When the deployment finishes, you should see a success notification from the Foundry Toolkit:
-
-!IMAGE[deploysuccess.png](instructions343795/deploysuccess.png)
-
-And the **Hosted Agent Playground** will be loaded to let you interact with your deployed agent.
+When the deployment finishes, you should see a success notification from the Foundry Toolkit and the **Hosted Agent Playground** will be loaded to let you interact with your deployed agent.
 
 ### What the toolkit does under the hood
 
