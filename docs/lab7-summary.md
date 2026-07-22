@@ -38,7 +38,7 @@ Across six labs, you -- as Serena, a developer at Zava -- constructed a **produc
 
 | | |
 |---|---|
-| **What you did** | Browsed the Foundry model catalog, evaluated model properties, tested Zava review moderation prompts in the Playground |
+| **What you did** | Browsed the Foundry model catalog in the Foundry Toolkit for VS Code, evaluated model properties, tested Zava review moderation prompts in the playground |
 | **Key skill** | Selecting the right model for a task based on capabilities, pricing, and quotas |
 | **Outcome** | Chose **gpt-5.4-mini** as the model for Zava's review moderation |
 
@@ -98,11 +98,11 @@ Across six labs, you -- as Serena, a developer at Zava -- constructed a **produc
 
 | | |
 |---|---|
-| **What you did** | Packaged Zava's review moderation logic as a Docker container, deployed it to Foundry Agent Service with **azd up**, tested via CLI and the Foundry Playground |
+| **What you did** | Packaged Zava's review moderation logic as a Docker container, tested it locally with the **Agent Inspector**, deployed it to Foundry Agent Service **from within the Foundry Toolkit** (Deploy button), and tested via the hosted agents playground |
 | **Key skill** | Containerized agent deployment, the Agent Framework SDK, hosted agent lifecycle management |
 | **Outcome** | A live, cloud-hosted Zava review moderation agent accessible via the OpenAI Responses API |
 
-**Core concept:** A hosted agent turns Serena's local Python code into a managed, scalable service -- no infrastructure management, just azd up.
+**Core concept:** A hosted agent turns the local Python code into a managed, scalable service -- no infrastructure management, deployed straight from the Foundry Toolkit.
 
 ---
 
@@ -111,7 +111,7 @@ Across six labs, you -- as Serena, a developer at Zava -- constructed a **produc
 By completing this workshop, you gained hands-on experience with:
 
 ### Azure & Infrastructure
-- Navigating the Microsoft Foundry portal and model catalog
+- Navigating the Foundry Toolkit for VS Code and the model catalog
 - Provisioning infrastructure with Bicep and **azd**
 - Managing Azure resources (AI Services, ACR, RBAC, monitoring)
 - Understanding Foundry project architecture (accounts, projects, deployments, capability hosts)
@@ -126,10 +126,10 @@ By completing this workshop, you gained hands-on experience with:
 ### Agent Development & Deployment
 - Using the Microsoft Agent Framework (Agent, FoundryChatClient)
 - Writing a Dockerfile and agent.yaml manifest
-- Local testing before cloud deployment
-- Deploying containerized agents to Foundry Agent Service
+- Local testing with the Foundry Toolkit Agent Inspector before cloud deployment
+- Deploying containerized agents to Foundry Agent Service from within the Foundry Toolkit
 - Invoking and monitoring agents via azd ai agent CLI
-- Testing agents in the Foundry Playground
+- Testing agents in the Foundry Toolkit hosted agents playground
 
 ---
 

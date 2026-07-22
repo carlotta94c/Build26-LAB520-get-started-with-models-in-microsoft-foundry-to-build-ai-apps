@@ -23,6 +23,8 @@ Zava's online store receives thousands of product reviews daily across hundreds 
 
 ![architecture_lab520.png](./images/architecture_lab520.png)
 
+This pipeline uses **prompt-based JSON**: the system prompt instructs the model to respond only with valid JSON. For even stricter guarantees, OpenAI models support [Structured Outputs](https://platform.openai.com/docs/guides/structured-outputs), a **response_format** parameter that constrains the model to conform to a JSON schema. This lab uses the prompt-based approach for simplicity and portability across model providers.
+
 ---
 
 ## Step 1: Review the System Prompt
@@ -146,15 +148,17 @@ def moderate_comment(client, model: str, comment: str) -> dict:
 
 ## Step 3: Run the Application
 
+Run the following command from the terminal:
+
 ```bash
 python src/02_comment_moderation.py
 ```
 
-### Expected Output ((You are using a LLM non determistic solution so the output will not 100% match, simply validate message and format))
+You should see output similar to the sample output below. Since LLMs are non-deterministic, the output will not 100% match. Validate that the message and formatting is similar.
 
 ```
 ========================================
-  Zava Product Review Moderation System
+  Comment Moderation System
   Model: gpt-5.4-mini
 ========================================
 
@@ -243,6 +247,12 @@ Try adjusting the confidence thresholds in the apply_moderation function:
 | Lower SAFE threshold (0.8 → 0.6) | More comments auto-approved |
 | Raise UNSAFE threshold (0.7 → 0.9) | Fewer auto-blocks, more human review |
 | Add a NEEDS_REVIEW handler | Custom routing for borderline content |
+
+After each change, re-run the moderation script to see the effect on the same 5 sample reviews:
+
+```bash
+python src/02_comment_moderation.py
+```
 
 ---
 

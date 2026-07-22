@@ -4,7 +4,7 @@
 
 To begin, log into the virtual machine using the following credentials: +++@lab.VirtualMachine(Win11-Pro-Base).Password+++
 
-# Part 1: Discover models in Microsoft Foundry
+# Part 1: Discover Microsoft Foundry hosted models
 
 > **Duration:** ~10 minutes
 
@@ -12,64 +12,63 @@ To begin, log into the virtual machine using the following credentials: +++@lab.
 
 You are a developer at **Zava** — a large global home-improvement retailer that operates both online and physical stores. Zava's platform receives thousands of customer product reviews daily from shoppers like **Bruno**, who is renovating his kitchen. Your task is to build an automated review moderation system that classifies customer reviews before they go live on the site. Eventually, this system will work alongside **Cora**, Zava's AI shopping assistant, to keep the platform safe and helpful.
 
-In this lab, you will explore the Microsoft Foundry model catalog to find a model that can power Zava's review moderation pipeline.
+In this lab, you will explore the Microsoft Foundry model catalog — directly inside Visual Studio Code using the **Foundry Toolkit** extension — to find a model that can power Zava's review moderation pipeline.
 
 ## Objective
 
-Explore the Microsoft Foundry portal to discover available hosted models, understand model capabilities, and identify a model suitable for inference-based tasks like product review moderation.
+Explore the Foundry Toolkit model catalog in Visual Studio Code to discover available hosted models, understand model capabilities, and identify a model suitable for inference-based tasks like product review moderation.
 
 ---
 
-## Step 1: Open Microsoft Foundry portal
+## Step 1: Open the project in VS Code
 
-Open the Microsoft Edge browser from the bottom taskbar.
+1. Open Visual Studio Code by launching it from the Start menu or desktop.
 
-Navigate to the Microsoft Foundry Portal at +++https://ai.azure.com+++ 
+2. In VS Code, select **File → Open Folder**.
 
-Select the **Start building** button and sign in with the following Azure credentials.
+3. Navigate to the "Desktop" folder, select "Build26-LAB520-main", and click **Select folder**.
 
-Username:  
-+++@lab.CloudPortalCredential(User1).Username+++
+4.  When prompted with "Do you trust the authors of the files in this folder?", select "Yes, I trust the authors"
 
-If prompted for a Temporary Access Pass 'TAP':
-+++@lab.CloudPortalCredential(User1).AccessToken+++
+    !IMAGE[trust.png](instructions343795/trust.png)
 
-If prompted for a Password: 
-+++@lab.CloudPortalCredential(User1).Password+++
-
-You will land on the Foundry **resources** page. This is the central hub for managing AI resources.
-
-Ensure the **New Foundry** switch at the top of the screen is turned on.
-
-!IMAGE[newfoundry.png](instructions343795/newfoundry.png)
-
-Now click the linked project name from the "All resources" listing to open it in Foundry.
-If you see a dialog pop open about what you would like to do next, you can close it.
-
-> [+alert] **If you are unable to view the project please see below**
-> 
-1. Switch to old foundry portal by toggling the New Foundry toggle at the top of the page
-!IMAGE[sla1i1tp.png](instructions343795/sla1i1tp.png)
-2. Click "Continue without feedback"
-!IMAGE[yc6ix262.png](instructions343795/yc6ix262.png)
-3. Project will be visible in old foundry portal, click on the project
-!IMAGE[f71vnukz.png](instructions343795/f71vnukz.png)
-4. Once in the project click on the New Foundry toggle button to return to new foundry with the project retained in the new foundry
-!IMAGE[0dt15v07.png](instructions343795/0dt15v07.png)
-!IMAGE[wwez4x1w.png](instructions343795/wwez4x1w.png)
-
+5. You should see the project files in the sidebar. 
 
 ---
 
-## Step 2: Explore the model catalog
+## Step 2: Open the Foundry Toolkit in Visual Studio Code
 
-1. In the main window, click **Discover** from the top menu.
+The **Foundry Toolkit** extension is already installed on the lab virtual machine, so you can explore models without leaving your editor — no web browser required. 
 
-2. In the **Discover** section, browse the available models by clicking **Models**. These are production-ready, hosted models that you can use without fine-tuning.
-3. You can use the filters within the **Models** page to narrow down the list of models. For example, you can filter by Supported features (Agent service, Fine-tuning, etc), Source (Azure OpenAI, Microsoft, Meta, Mistral, etc.) or by Inference Task (Chat Completion, Image Analysis etc). This allows you to quickly filter models based on a specific task or requirement.
+1. Open Visual Studio Code from the Start menu or desktop.
+2. In the **Activity Bar** on the left, click the **Foundry Toolkit** icon to open the toolkit panel.
 
+    !IMAGE[Foundry Toolkit Icon](instructions343795/ftk_icon.png)
 
-Select a model to view the details page. Take note of the following properties in the side box.
+3. Next, click on **Set Foundry Project** -> **Switch Project** -> **Sign in to Azure**.
+4. When you are prompted to sign in to Azure to access your Foundry resources, sign in with the following Azure credentials.
+
+    Username:  
+    +++@lab.CloudPortalCredential(User1).Username+++
+
+    If prompted for a Temporary Access Pass 'TAP':
+    +++@lab.CloudPortalCredential(User1).AccessToken+++
+
+    If prompted for a Password: 
+    +++@lab.CloudPortalCredential(User1).Password+++
+5. After signing in, select the Foundry project that shows up in the list. This is the project pre-provisioned for you in the lab environment, that contains the model deployments you will use for Zava's review moderation system.
+
+The toolkit panel is your central hub for browsing models, testing them in a playground, and working with agents — all from within VS Code.
+
+---
+
+## Step 3: Explore the model catalog
+
+1. In the Foundry Toolkit panel, under **Developer Tools**, select **Model Catalog** to open the model catalog view. These are production-ready, hosted models that you can use without fine-tuning.
+    !IMAGE[Model Catalog](instructions343795/model_catalog.png)
+2. Browse the available models. You can use the filters at the top of the catalog to narrow down the list — for example, by Publisher (Azure OpenAI, Microsoft, Meta, Mistral, etc.), by where the model is **hosted by** (such as Microsoft Foundry), or by task (Chat Completion, Image Analysis, etc.). This allows you to quickly filter models based on a specific task or requirement.
+
+Select a model to view its model card. Take note of the following properties.
 
 | Property | Common values |
 |----------|-----------------|
@@ -82,45 +81,62 @@ Select a model to view the details page. Take note of the following properties i
 
 ---
 
-## Step 3: Check model details
+## Step 4: Identify a Model for This Lab
 
-For this workshop, you need a model that supports **chat completion**: the ability to accept a system prompt and user messages and return a structured response. The **gpt-5.4-mini** from Azure OpenAI is a high quality model that is also fast and cost-efficient, so we have already deployed it in the Foundry project for you.
+For this workshop, you need a model that supports **chat completion** -- the ability to accept a system prompt and user messages and return a structured response.
 
-Find **gpt-5.4-mini** from the catalog and open the details page.
-Explore the tabs at the top:
+**Recommended models for this lab:**
 
-1. **Details**: Model description and capabilities
-2. **Deployments**: A list of current deployments of this model
-3. **Benchmarks**: Scores and performance metrics
-4. **Responsible AI**: Guardrails imposed on the model from Azure AI Content Safety
-5. **License**: Links to applicable licensing terms
+| Model | Publisher | Why |
+|-------|-----------|-----|
+| gpt-5.4-mini | OpenAI | Fast, cost-efficient, excellent for classification |
+| gpt-5.4 | OpenAI | Higher quality, good for complex moderation |
+| Phi-4 | Microsoft | Strong reasoning, open-weight |
 
+> **Tip:** gpt-5.4-mini is the best choice for this lab -- it is fast, inexpensive, and well-suited for moderation and classification tasks.
 
 ---
 
-## Step 4: Explore the playground (Optional)
+## Step 5: Check model details
 
-1. From the **gpt-5.4-mini** deployments tab, select the existing deployment. That brings you to the **playground** for the model deployment.
-2. In the **Instructions** text field, enter:
+ The **gpt-5.4-mini** model from Azure OpenAI is high quality, fast, and cost-efficient, which makes it ideal for Zava's review moderation pipeline.
+
+Find **gpt-5.4-mini** in the catalog and open its detail page. Explore the tabs at the top:
+
+1. **Details**: Model description and capabilities
+2. **Benchmarks**: Scores and performance metrics
+3. **Responsible AI**: Guardrails imposed on the model from Azure AI Content Safety
+4. **License**: Links to applicable licensing terms
+
+> [!NOTE]
+> The model card is opened in a web browser page. Make sure to return to VS Code after reviewing it to continue with the lab.
+
+---
+
+## Step 6: Explore the playground (Optional)
+
+1. Back in VS Code, under **Developer Tools** -> **Build** in the toolkit panel, open the **Model Playground**. This opens the model playground inside VS Code.
+2. Select **gpt-5.4-mini** from the model dropdown.
+3. In the **System prompt** (Instructions) field, enter:
 
 ```Instructions
 You are a product review moderator for Zava, a home-improvement retailer. Classify the following customer review as SAFE, NEEDS_REVIEW, or UNSAFE. Respond with only the classification label.
 ```
 
-3. In the **Chat with the model** text field, enter:
+4. In the chat box, enter:
 
 ```Prompt
 This paint is garbage and whoever designed it should be fired
 ```
 
-4. Click the send button and observe the response. This is a preview of the inference pattern you will implement in code during Labs 3 and 4 to moderate Zava product reviews.
+5. Send the message and observe the response. This is a preview of the inference pattern you will implement in code during Labs 3 and 4 to moderate Zava product reviews.
 
 ---
 
 ## What you learned
 
-- ✅ How to navigate the Microsoft Foundry portal
-- ✅ How to browse the model catalog
+- ✅ How to navigate the Foundry Toolkit in Visual Studio Code
+- ✅ How to browse the model catalog from within VS Code
 - ✅ How a model responds to a Zava review moderation prompt
 
 ---
@@ -142,29 +158,13 @@ This paint is garbage and whoever designed it should be fired
 
 ## Objective
 
-Open the lab project in VS Code and validate that your environment is configured correctly — ensuring the **.env** file, dependencies, and CLI tools are all in place before you start writing code.
+Validate that your lab project environment is configured correctly — ensuring the **.env** file, dependencies, and CLI tools are all in place before you start writing code.
 
 ---
 
-## Step 1: Open the project in VS Code
+## Step 1: Validate the .env is correct
 
-1. Open Visual Studio Code by launching it from the Start menu or desktop.
-
-2. In VS Code, select **File → Open Folder**.
-
-3. Navigate to the "Desktop" folder, select "Build26-LAB520-main", and click **Select folder**.
-
-4.  When prompted with "Do you trust the authors of the files in this folder?", select "Yes, I trust the authors"
-
-    !IMAGE[trust.png](instructions343795/trust.png)
-
-5. You should see the project files in the sidebar. 
-
----
-
-## Step 2: Validate the .env is correct
-
-Ensure that the .env file has been created successfully in the root of your project:
+In VSCode, ensure that the .env file has been created successfully in the root of your project:
 
 1. Open the **.env** file from the root of the project folder.
 2. Confirm the following variables exist:
@@ -829,16 +829,17 @@ MODEL_DEPLOYMENT_NAME_2=gpt-5.4
 
 ## Deploying a new model
 
-If you only have one model deployed, deploy a second one from the Foundry portal:
+If you only have one model deployed, deploy a second one from the Foundry Toolkit Model Catalog:
 
-1. Go to +++https://ai.azure.com+++
-2. Open your **Project**
-3. Select **View Deployments** or **Models** from the left-hand menu
-4. Click **Deploy** > **Deploy a base model**
-5. Search for **gpt-5.4** and select it
-6. Select **Deploy** > **Default settings**
+1. Click on the Foundry Toolkit icon in the VS Code Activity Bar to open the extension panel
+2. Navigate to **Developer Tools** -> **Discover** -> **Model Catalog**
+3. Apply the filter **Hosted by** -> **Foundry** to see all Foundry-hosted models
+4. In the search bar type **gpt-5.4**
+5. Click **Deploy** > **Deploy with Default settings**
 
-Wait for the deployment to complete before proceeding. You should see the playground once complete.
+Wait for the deployment to complete before proceeding. You should see the pop up below once complete.
+
+!IMAGE[Foundry Toolkit Deployment Complete](instructions343795/ftk_deployment_success.png)
 
 > **Note:** If you are unable to deploy a second model, skip this lab and proceed to Lab 6.
 
@@ -988,13 +989,15 @@ If you finish early, try these:
 **Next:** Lab 6 - Deploy agent
 
 =====
-# Lab 6: Deploy a hosted agent with the AZD CLI
+# Lab 6: Deploy a hosted agent with the Foundry Toolkit
 
 > **Duration:** ~20 minutes
 
 ## Objective
 
-Deploy Zava's product review moderation logic from Lab 4 as a **hosted agent** on Microsoft Foundry Agent Service using the Azure Developer CLI (**azd ai agent**). This turns the local Python script into a persistent, cloud-hosted service that can scale to handle Zava's daily review volume. The entire workflow — initialization, build, deploy, invoke, monitor, and cleanup — is driven by CLI commands.
+Deploy Zava's product review moderation logic from Lab 4 as a **hosted agent** on Microsoft Foundry Agent Service — all from **inside Visual Studio Code** using the **Foundry Toolkit**. You will first test the agent locally with the **Agent Inspector**, then deploy it to the cloud with the toolkit's **Deploy** button — no manual `azd up` required. This turns the local Python script into a persistent, cloud-hosted service that can scale to handle Zava's daily review volume.
+
+This lab is organized into two sections. **Part A** (recommended) drives the whole lifecycle — test, deploy, interact, and monitor — from the Foundry Toolkit UI. **Part B** (optional) shows how to do the same thing from the `azd` command line.
 
 ---
 
@@ -1008,30 +1011,44 @@ Foundry handles the heavy lifting of hosting an agent:
 - **REST API**: a protocol library exposes your agent as an OpenAI Responses API endpoint, callable by the Foundry Playground, other agents, or any application.
 - **Per-session scaling**: the platform creates a sandbox on demand for each session and tears it down when idle (no replica counts to configure).
 - **Dedicated agent identity**: each agent gets its own Microsoft Entra ID, which it uses to authenticate to Foundry models and downstream Azure services (no keys to manage).
-- **Full lifecycle via CLI**: the **azd** CLI handles all steps: init → deploy → invoke → monitor → cleanup.
+- **Full lifecycle in VS Code**: the **Foundry Toolkit** handles local testing (Agent Inspector), deployment (Deploy button), and invocation — without leaving the editor.
 
 ---
 
 ## Architecture
 
-The **azd** CLI turns your agent code into a container image, pushes it to Azure Container Registry, and deploys it to Foundry Agent Service. At runtime, the platform pulls the image, provisions a sandbox, and exposes a dedicated endpoint that your agent uses to call Foundry models.
+The Foundry Toolkit turns your agent code into a container image, pushes it to Azure Container Registry, and deploys it to Foundry Agent Service. At runtime, the platform pulls the image, provisions a sandbox, and exposes a dedicated endpoint that your agent uses to call Foundry models.
 
 !IMAGE[mermaid_diagram2.png](instructions343795/mermaid_diagram2.png)
 
 ---
 
-## Prerequisites
+## What's New in This Lab
 
-- Azure Developer CLI installed with the ai agent extension:
-  ```bash
-  azd ext install azure.ai.agents
-  azd ext upgrade azure.ai.agents
-  ```
-- **.env** file with **PROJECT_ENDPOINT** and **MODEL_DEPLOYMENT_NAME** set
+Labs 3-4 were pure Python -- you wrote a script, ran it locally, and saw output in your terminal. This lab introduces **three new concepts**, but do not worry: the Foundry Toolkit handles the heavy lifting for all of them.
+
+| New concept | What it means | What you actually do |
+|---|---|---|
+| **Agent Inspector** | An interactive test harness inside VS Code that runs your agent as a local HTTP server and shows requests, responses, and traces | Press **F5** -- the toolkit starts the agent and opens the Inspector webview |
+| **Docker container** | Your agent code is packaged into a portable image | The toolkit builds it for you -- you do not write or run any Docker commands |
+| **Hosted agent on Foundry** | A persistent REST API running your moderation logic | Deploy with the **Deploy** button in the Foundry Toolkit; chat with it in the **Hosted Agent Playground** |
+
+The bottom line: you will edit zero infrastructure files and run no manual `azd up`. You test with the **Agent Inspector** (F5) and deploy from the **Foundry Toolkit**.
 
 ---
 
-## Step 1: Review the agent code
+## Prerequisites
+
+- The **Foundry Toolkit** extension installed in VS Code and signed in to Azure (from Lab 1)
+- **.env** file with **PROJECT_ENDPOINT** and **MODEL_DEPLOYMENT_NAME** set
+
+> **Note:** The Foundry Toolkit uses the Azure Developer CLI (`azd`) and its `azure.ai.agents` extension under the hood to build and deploy hosted agents. Both are already installed and configured in the lab environment, so you drive the whole workflow from inside VS Code — no manual CLI setup needed.
+
+---
+
+## Review the agent code
+
+> This section and the next two (**Initialize the project** and **Install agent dependencies**) are shared background that applies to both Part A and Part B. Read them once, then pick whichever deployment path you prefer.
 
 The agent source code lives in **src/agent/** and consists of three files: **app.py**, **Dockerfile** and **agent.yaml**:
 
@@ -1101,11 +1118,9 @@ environment_variables:
 
 ---
 
-## Reference: How the agent project was initialized and deployed
+## Initialize the project (Optional — Already Done)
 
-> **Don't run these commands!** The lab environment has already run both **azd ai agent init** and **azd up** for you. This section explains what was done, so you understand the full workflow.
-
-### Initialization (azd ai agent init)
+> **Note:** The project already includes the agent files and azure.yaml configuration. This section shows how it was set up, for reference. It applies to both Part A and Part B.
 
 To scaffold the hosted agent project, the following command was run:
 
@@ -1124,61 +1139,213 @@ This command:
 3. Registers the agent as a service in azure.yaml
 4. Sets all required azd environment variables
 
-### Deployment (azd up)
-
-After initialization, this command was run to deploy the agent:
-
-```powershell
-azd up
-```
-
-The **azd up** command executes a multi-step process:
-
-1. **Provisions**: Creates/updates infrastructure (ACR, capability host, RBAC)
-2. **Builds**: Sends src/agent/ to ACR for a remote Docker build
-3. **Deploys**: Registers a hosted agent version on Foundry Agent Service
-4. **Starts**: Launches the container and waits for it to be ready
-
-To see the full output from the **azd up** deployment that was run in this lab environment, open the **lifecycle** text file on the Desktop.
-
 ---
 
-## Step 3: Test the local agent
+## Install agent dependencies
 
-Before deploying to the cloud, validate that the agent runs correctly on your machine. This catches import errors, configuration issues, and logic bugs early.
+> This step is shared by both Part A and Part B — do it once before you start.
 
-### Install agent dependencies
-
-The agent uses packages that are separate from the main lab requirements. Install them first:
+The agent uses packages that are separate from the main lab requirements, and both deployment paths need them. Install them first:
 
 ```powershell
 pip install -r src/agent/requirements.txt
 ```
 
-### Start the agent
+This includes **agent-dev-cli** and **debugpy**, which power the Agent Inspector and local debugging.
 
-Open a terminal, activate your virtual environment, and run:
+---
+
+# Part A — Deploy with the Foundry Toolkit (Recommended)
+
+In this section you drive the entire agent lifecycle from the **Foundry Toolkit** UI inside VS Code: test locally with the **Agent Inspector**, deploy with the **Deploy** button, chat with the deployed agent in the **Hosted Agent Playground**, watch its **Logs**, and clean up — all without touching the terminal.
+
+## A1: Sign in to azd
+
+The Foundry Toolkit uses the Azure Developer CLI (`azd`) under the hood to build and deploy your agent, so make sure `azd` is authenticated before you start. Open a terminal and run:
 
 ```powershell
-cd src/agent
-python app.py
+azd auth login
 ```
 
-If you see a dialog about allowing network access, select **Allow**.
+A browser window opens for you to sign in. Use the **same account** you used to sign in to the Foundry Toolkit earlier. When prompted, **choose your Azure subscription** and **enter an environment name** (for example, `zava-agent`) — `azd` uses this environment to group the resources it manages. Once you see `Logged in to Azure`, you are ready to go.
 
-You should see output like:
+> **Tip:** You only need to do this once per environment. If you are already signed in, `azd auth login` will confirm your existing session.
 
-```output
-Starting Zava product review moderation agent...
-  Endpoint: https://<your-resource>.services.ai.azure.com/api/projects/<your-project>
-  Model:    gpt-5.4-mini
-Starting hosting adapter on port 8088...
-INFO:     Uvicorn running on http://0.0.0.0:8088 (Press CTRL+C to quit)
+## A2: Test the agent locally with the Agent Inspector
+
+Before deploying to the cloud, validate that the agent runs correctly on your machine. The Foundry Toolkit ships an **Agent Inspector** — an interactive test harness that runs your agent as a local HTTP server and lets you send messages and inspect every request, response, and trace, all inside VS Code. This catches import errors, configuration issues, and logic bugs early.
+
+### Launch the agent with the Agent Inspector
+
+The project already includes the VS Code debug configuration (**.vscode/tasks.json** and **.vscode/launch.json**) that starts the agent as an HTTP server on port 8088 and opens the Agent Inspector.
+
+1. In VS Code, open **src/agent/app.py**.
+2. Press **F5** (or select **Run → Start Debugging**) and, if prompted, choose **Debug Agent with Agent Inspector**.
+3. If you see a dialog about allowing network access, select **Allow**.
+4. VS Code starts the agent server and opens the **Agent Inspector** webview. You should see the server start in the terminal:
+
+    ```output
+    Starting Zava product review moderation agent...
+      Endpoint: https://<your-resource>.services.ai.azure.com/api/projects/<your-project>
+      Model:    gpt-5.4-mini
+    Application startup complete.
+    ```
+
+> **Tip:** If the Inspector does not open automatically, click the **Foundry Toolkit** icon in the Activity Bar → **Agent (local)** → **Open Agent Inspector**.
+
+### Test classification prompts in the Inspector
+
+In the Agent Inspector chat box, type a review and press **Send**. The agent responds with a JSON classification, and the Inspector shows the full request/response and trace.
+
+Try these prompts to validate each classification category:
+
+| Prompt to send | Expected classification |
+|---|---|
+| Love this cordless drill! Battery lasts all day and the torque is impressive. | **SAFE** |
+| The tile cutter is mediocre, I expected more for the price. | **SAFE** |
+| This paint is garbage and whoever designed it should be fired | **NEEDS_REVIEW** |
+| Zava employees are the worst people on earth | **UNSAFE** |
+| Does this deck stain work on pressure-treated lumber? | **SAFE** |
+
+Each response contains a structured JSON object:
+
+```json
+{
+    "classification": "SAFE",
+    "confidence": 1.0,
+    "reason": "Positive and constructive product feedback about a cordless drill."
+}
 ```
 
-### Send test requests over HTTP
+### Inspect events metadata
 
-Open a **second terminal** and send a test comment to the locally running agent:
+The Agent Inspector isn't just a chat window -- it captures the full request/response lifecycle. If you click on the **Events** tab, you can see the raw stream of **server-sent events** the agent emits while generating each reply, shown newest-first. Because the agent speaks the **OpenAI Responses API**, the classification JSON isn't returned all at once -- it is streamed token-by-token, and every stage of that stream is recorded as a separate event. Expand any row (click the **>** chevron) to see its full JSON payload.
+
+For a single review classification you will typically see this sequence (these events nest inside one another):
+
+```
+response
+ └── output_item        (the assistant message)
+      └── content_part   (a block of content)
+           └── output_text
+                └── delta, delta, delta … → done
+```
+
+The many `output_text.delta` events are the streamed text chunks that make the JSON appear incrementally, while the `.done` and `.completed` events are the "closing brackets" confirming each level finished cleanly. Seeing a `response.completed` event means the agent returned a well-formed response -- this is exactly the behavior you want to confirm before deploying to the cloud. Click `response.completed` to inspect the final payload and the token counts for the request.
+
+When you are done testing, press the **Stop** button in the debug toolbar (or **Ctrl+C** in the terminal) to shut the agent down, then proceed to deployment.
+
+---
+
+## A3: Deploy the agent with the Deploy button
+
+Once you tested your agent locally, you can deploy the hosted agent **from inside VS Code** using the **Deploy** button in the Foundry Toolkit Agent Inspector UI. The toolkit handles the entire workflow — provisioning, building, and deploying — with no manual `azd up` required.
+
+In the deployment configuration dialog, you can optionally change the agent name, deployment method, CPU and memory quotas. For the sake of this lab, leave the defaults and click **Deploy**.
+
+When the deployment finishes, you should see a success notification from the Foundry Toolkit:
+
+!IMAGE[deploysuccess.png](instructions343795/deploysuccess.png)
+
+And the **Hosted Agent Playground** will be loaded to let you interact with your deployed agent.
+
+### What the toolkit does under the hood
+
+When you deploy, the Foundry Toolkit runs the same multi-step `azd` workflow you would otherwise run manually:
+
+1. **Provisions** — Creates/updates infrastructure (ACR, capability host, RBAC)
+2. **Builds** — Sends src/agent/ to ACR for a remote Docker build
+3. **Deploys** — Registers a hosted agent version on Foundry Agent Service
+4. **Starts** — Launches the container and waits for it to be ready
+
+Since this lab environment has already provisioned the resources, the toolkit skips the provisioning step and only registers the new agent version.
+
+> The first deployment takes 3-5 minutes. Subsequent deployments are faster.
+>
+> **Note:** You may briefly see a **404 error** while the agent registers. This is a known post-deploy timing issue, not a failure — as long as the toolkit reports the container built and the agent deployed, you can safely ignore it.
+
+## A4: Interact with the Hosted Agent Playground
+
+The **Foundry Toolkit** extension in Visual Studio Code lets you interact with your deployed hosted agent through a chat-style **playground** — right inside your editor, with no CLI, code, or web browser required. This is useful for quick testing, demos, and validating prompt behavior.
+
+> **Note:** When you deploy with the **Deploy** button in the previous step, the **Hosted Agent Playground** opens automatically, so you can skip straight to testing. The steps below show how to open it manually if you ever need to.
+
+### Open the hosted agents playground
+
+1. In VS Code, click the **Foundry Toolkit** icon in the **Activity Bar** to open the toolkit panel. If prompted, sign in with the same Azure account you used earlier.
+2. Expand the **My resources** section and click on **Agents** to see the hosted agents in your Foundry project. Hosted agents are listed under the **Hosted** tab.
+3. Find **zava-review-moderation-agent** in the agent list. Its status should show **Success**.
+4. Select the agent and open it in the **Playground** to start the interactive chat UI.
+
+> **Tip:** If the agent does not appear yet, refresh the **Agents** view — it can take a minute after deployment for the agent to register.
+
+Test a few sample reviews in the playground you used locally in the Agent Inspector (step 3) to confirm the agent is working properly in the cloud.
+
+### Validate edge cases
+
+Use the playground to quickly test edge cases and boundary conditions:
+
+```testcases
+Empty review:
+(just press Send with no text)
+
+Ambiguous tone:
+"Wow, what a 'great' product selection you have here"
+
+Mixed content:
+"The drill is excellent but the store staff are completely useless and incompetent"
+
+Non-English:
+"Este taladro es terrible y la tienda es un desastre"
+```
+
+Check that the agent returns valid JSON for every input and that the **confidence** score reflects ambiguity (lower confidence for borderline cases).
+
+> **Troubleshooting:** If the Playground shows the agent as **Stopped** or **Activating**, wait 1-2 minutes — the container may still be starting. Check status with **azd ai agent show** from the CLI.
+
+## A5: Monitor the agent logs
+
+The Foundry Toolkit lets you watch your hosted agent's live logs without leaving VS Code — useful for confirming requests are reaching the container and for troubleshooting.
+
+1. In the **Foundry Toolkit** panel, expand **My resources** → **Agents** and select **zava-review-moderation-agent** (under the **Hosted** tab).
+2. Open the **Logs** view for the agent.
+3. Click **Start** to begin streaming logs. As you send messages from the Hosted Agent Playground, the corresponding request and container activity appear in real time.
+4. Send a couple of reviews from the playground and watch the log entries stream in.
+5. When you are finished, click **Stop** to stop streaming.
+
+> **Tip:** Keep the **Logs** view open in one editor group and the **Hosted Agent Playground** in another so you can watch logs update as you chat with the agent.
+
+## A6: Clean up
+
+When you are done with the UI workflow, remove the hosted agent so it does not keep consuming resources:
+
+1. In the **Foundry Toolkit** panel, expand **My resources** → **Agents** (the **Hosted** tab).
+2. Right-click **zava-review-moderation-agent** (or use the **...** menu) and select **Delete**.
+3. Confirm the deletion. The agent is removed from your Foundry project and stops running.
+
+> **Note:** Deleting the agent from the list removes the hosted agent deployment. If you also want to tear down the underlying infrastructure (ACR, capability host, etc.), use the `azd down` command shown in Part B.
+
+---
+
+# Part B (Optional) — Deploy with the command line
+
+Prefer the terminal, or want to automate the workflow in CI/CD? This section walks through the **same lifecycle** — test locally, deploy, interact, monitor, and clean up — using the `azd` CLI instead of the Foundry Toolkit UI. You only need to do **either** Part A **or** Part B; they accomplish the same thing.
+
+## B1: Sign in to azd
+
+The CLI workflow uses the Azure Developer CLI (`azd`), so make sure you are authenticated first:
+
+```powershell
+azd auth login
+```
+
+A browser window opens for you to sign in. Use the **same account** you used for the Foundry Toolkit. When prompted, **choose your Azure subscription** and **enter an environment name** (for example, `zava-agent`) that `azd` will use to group the deployed resources. Once you see `Logged in to Azure`, continue.
+
+> **Tip:** If you already ran `azd auth login` in Part A, you are still signed in and can skip this step.
+
+## B2: Test the agent locally
+
+You can run the agent directly and send it requests over HTTP or the CLI, without the Agent Inspector. Start the agent directly with `python app.py` from **src/agent**, then from a **second terminal** send a request:
 
 ```powershell
 Invoke-RestMethod -Uri "http://localhost:8088/responses" `
@@ -1186,62 +1353,29 @@ Invoke-RestMethod -Uri "http://localhost:8088/responses" `
     -Body '{"input": "Love this cordless drill! Battery lasts all day and the torque is impressive."}' | ConvertTo-Json -Depth 10
 ```
 
-The response is an OpenAI Responses API object. Look for the **text** field inside **output[].content[]** — it contains the agent's classification as escaped JSON:
-
-```json
-{
-  ...
-  "output": [
-    {
-      "type": "message",
-      "status": "completed",
-      "role": "assistant",
-      "content": [
-        {
-          "type": "output_text",
-          "text": "{\n  \"classification\": \"SAFE\",\n  \"confidence\": 1.0,\n  \"reason\": \"Positive and constructive product feedback about a cordless drill.\"\n}"
-        }
-      ]
-    }
-  ],
-}
-```
-
-Now send this command to test an input that should trigger an "UNSAFE" classification:
-
-```powershell
-Invoke-RestMethod -Uri "http://localhost:8088/responses" `
-    -Method POST -ContentType "application/json" `
-    -Body '{"input": "Zava employees are the worst people on earth"}' | ConvertTo-Json -Depth 10
-```
-
-### Send test requests with the CLI
-
-If you prefer, use **azd ai agent invoke** with the **--local** flag:
+The response is an OpenAI Responses API object. Look for the **text** field inside **output[].content[]** — it contains the agent's classification as escaped JSON. You can also use the CLI with the **--local** flag against the locally running agent:
 
 ```powershell
 azd ai agent invoke --local "The cabinet hardware feels cheap for the price Zava is charging"
 ```
 
-Once you've confirmed the agent works locally, proceed to cloud deployment.
+When you are done, press **Ctrl+C** in the agent terminal to stop the local server.
 
----
+## B3: Deploy with azd up
 
-## Step 4: Test the deployed agent
-
-The agent has already been deployed to Foundry Agent Service in this lab environment using **azd up**. You can review the full deployment output by opening the **lifecycle-log** text file on the Desktop.
-
-Before running any **azd ai agent** commands, set your environment endpoint so the CLI knows which Foundry project to target:
+Deploy the hosted agent from the command line:
 
 ```powershell
+azd config set tool.firstRunCompleted true
 azd env set FOUNDRY_PROJECT_ENDPOINT "https://<your-foundry-project-endpoint>"
+azd up
 ```
 
-Replace the endpoint value with the same value as **PROJECT_ENDPOINT** in the **.env** file.
+`FOUNDRY_PROJECT_ENDPOINT` is the same value as `PROJECT_ENDPOINT` in the **.env** file, so you can copy it from there. The `azd up` command provisions infrastructure, builds the container in ACR, and deploys the hosted agent — the same steps the Foundry Toolkit runs under the hood. Since this lab environment has already provisioned the resources, azd skips provisioning and registers the new agent version.
 
----
+> The first deployment takes 3-5 minutes. Subsequent deployments are faster.
 
-## Step 5: Check agent status
+## B4: Invoke the agent
 
 Verify the agent is running:
 
@@ -1258,10 +1392,6 @@ Name     zava-review-moderation-agent
 Version  <latest-version>
 Status   active
 ```
-
----
-
-## Step 6: Invoke the agent
 
 Send messages to your hosted agent directly from the CLI:
 
@@ -1293,87 +1423,13 @@ azd ai agent invoke "Zava employees are the worst people on earth"
 azd ai agent invoke "Does this deck stain work on pressure-treated lumber?"
 ```
 
-### Conversations
-
 By default, **azd ai agent invoke** reuses the same conversation session. To start fresh:
 
 ```powershell
 azd ai agent invoke --new-session "Fresh conversation here"
 ```
 
----
-
-## Step 7: Test in the Microsoft Foundry Playground
-
-The Foundry Playground at +++https://ai.azure.com+++ lets you interact with your deployed agent through a chat-style UI — no CLI or code required. This is useful for quick testing, demos, and validating prompt behavior.
-
-### 7.1: Open the Playground
-
-1. Open in the browser and navigate to +++https://ai.azure.com+++. If you got signed out, sign in with the same Azure account you used earlier.
-2. In the top navigation, select **Build**. If you do not see it, click **All projects** and find it under your AI Services resource
-3. In the left sidebar, click **Agents**.
-4. Find **zava-review-moderation-agent** in the agent list. Its details should show: **Version** (increments with each deployment), **Type** = hosted, and **Created on** (timestamp of last update).
-5. Click the agent name to open its detail page.
-6. Click the **Try in Playground** button (or the **Playground** tab) to open the interactive chat UI. You may already be in it.
-
-> **Tip:** You can get a direct playground link using the azd CLI. Run this command again:
-> 
-```powershell
-> azd ai agent show
-```
-> Look for **Playground URL** in the output.
-
-### 7.2: Test classification prompts
-
-In the Playground chat box, type a comment and press **Send**. The agent responds with a JSON classification.
-
-Try these test prompts to validate each classification category:
-
-| Prompt to send | Expected classification |
-|---|---|
-| Love this cordless drill! Battery lasts all day. | **SAFE** |
-| The tile cutter is mediocre, I expected more for the price. | **SAFE** |
-| I think this review contains sensitive personal data: SSN 123-45-6789 | **NEEDS_REVIEW** |
-| Zava employees are the worst people on earth | **UNSAFE** |
-| Does this deck stain work on pressure-treated lumber? | **SAFE** |
-
-Each response should contain a structured JSON object:
-
-```json
-{
-    "classification": "SAFE",
-    "confidence": 1.0,
-    "reason": "Positive and constructive product feedback about a cordless drill."
-}
-```
-
-The playground maintains conversation history within a session. Send several prompts in sequence and notice the chat window shows the full exchange, with each agent response appearing as a message with the JSON classification. Click **New chat** (or the **+** button) to start a fresh session — useful when testing the same prompt multiple times to check consistency.
-
-### 7.3: Validate edge cases
-
-Use the playground to quickly test edge cases and boundary conditions:
-
-```testcases
-Empty review:
-(just press Send with no text)
-
-Ambiguous tone:
-"Wow, what a 'great' product selection you have here"
-
-Mixed content:
-"The drill is excellent but the store staff are completely useless and incompetent"
-
-Non-English:
-"Este taladro es terrible y la tienda es un desastre"
-```
-
-Check that the agent returns valid JSON for every input and that the **confidence** score reflects ambiguity (lower confidence for borderline cases).
-
-> **Troubleshooting:** If the Playground shows the agent as **Stopped** or **Activating**, wait 1-2 minutes — the container may still be starting. Check status with **azd ai agent show** from the CLI.
-
----
-
-## Step 8: Monitor logs
+## B5: Monitor logs
 
 To monitor a specific interaction, first create a session and invoke the agent:
 
@@ -1410,6 +1466,19 @@ azd ai agent monitor --follow
 ```
 
 > Open a second terminal for log monitoring while you invoke the agent in the first.
+
+## B6: Clean up
+
+When you are done, clean up all Azure resources:
+
+```powershell
+azd down
+```
+
+This removes:
+- The hosted agent deployment
+- The container image in ACR
+- Any infrastructure provisioned by **azd up**
 
 ---
 
@@ -1449,15 +1518,15 @@ Want to extend the agent before wrapping up? Try adding a fourth classification 
 
 - ✅ How hosted agents package your code as managed containers on Foundry
 - ✅ How the Foundry hosting adapter (**ResponsesHostServer**) turns your agent into an API
-- ✅ How **azd ai agent init** scaffolds and configures a hosted agent project
-- ✅ How **azd up** handles the entire build → deploy → start lifecycle
-- ✅ How to invoke, monitor, and manage hosted agents via the CLI
+- ✅ How to test a hosted agent locally with the **Agent Inspector** (F5) before deploying
+- ✅ How to deploy a hosted agent **from within the Foundry Toolkit** — no manual `azd up`
+- ✅ How to invoke, monitor, and manage hosted agents
 
 ---
 
 ## Key takeaway
 
-> The Zava review moderation pipeline from Lab 4 is now a **production-ready hosted agent** on Microsoft Foundry. Using the **azd ai agent** CLI, the entire workflow — from initialization to deployment to invocation — is just a few terminal commands. No manual Docker builds, no SDK deployment scripts, no infrastructure management.
+> The Zava review moderation pipeline from Lab 4 is now a **production-ready hosted agent** on Microsoft Foundry. Using the **Foundry Toolkit** in VS Code — the **Agent Inspector** for local testing and the **Deploy** button for deployment — the entire workflow happens inside your editor. No manual Docker builds, no SDK deployment scripts, no infrastructure management.
 
 ---
 
@@ -1488,7 +1557,7 @@ Across six labs, you constructed a **product review moderation pipeline** end-to
 
 | | |
 |---|---|
-| **What you did** | Browsed the Foundry model catalog, evaluated model properties, tested Zava review moderation prompts in the Playground |
+| **What you did** | Browsed the Foundry model catalog in the Foundry Toolkit for VS Code, evaluated model properties, tested Zava review moderation prompts in the playground |
 | **Key skill** | Selecting the right model for a task based on capabilities, pricing, and quotas |
 | **Outcome** | Chose **gpt-5.4-mini** as the model for Zava's review moderation |
 
@@ -1548,11 +1617,11 @@ Across six labs, you constructed a **product review moderation pipeline** end-to
 
 | | |
 |---|---|
-| **What you did** | Packaged Zava's review moderation logic as a Docker container, deployed it to Foundry Agent Service with **azd up**, tested via CLI and the Foundry Playground |
+| **What you did** | Packaged Zava's review moderation logic as a Docker container, tested it locally with the **Agent Inspector**, deployed it to Foundry Agent Service **from within the Foundry Toolkit** (Deploy button), and tested via the hosted agents playground |
 | **Key skill** | Containerized agent deployment, the Agent Framework SDK, hosted agent lifecycle management |
 | **Outcome** | A live, cloud-hosted Zava review moderation agent accessible via the OpenAI Responses API |
 
-**Core concept:** A hosted agent turns the local Python code into a managed, scalable service — no infrastructure management, just azd up.
+**Core concept:** A hosted agent turns the local Python code into a managed, scalable service — no infrastructure management, deployed straight from the Foundry Toolkit.
 
 ---
 
@@ -1561,7 +1630,7 @@ Across six labs, you constructed a **product review moderation pipeline** end-to
 By completing this workshop, you gained hands-on experience with:
 
 ### Azure & infrastructure
-- Navigating the Microsoft Foundry portal and model catalog
+- Navigating the Foundry Toolkit for VS Code and the model catalog
 - Provisioning infrastructure with Bicep and **azd**
 - Managing Azure resources (AI Services, ACR, RBAC, monitoring)
 - Understanding Foundry project architecture (accounts, projects, deployments, capability hosts)
@@ -1579,7 +1648,7 @@ By completing this workshop, you gained hands-on experience with:
 - Local testing before cloud deployment
 - Deploying containerized agents to Foundry Agent Service
 - Invoking and monitoring agents via azd ai agent CLI
-- Testing agents in the Foundry Playground
+- Testing agents in the Foundry Toolkit hosted agents playground
 
 ---
 

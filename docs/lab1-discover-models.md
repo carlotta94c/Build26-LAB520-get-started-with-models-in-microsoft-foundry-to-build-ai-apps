@@ -6,47 +6,53 @@
 
 You are **Serena**, a developer at **Zava** -- a large global home-improvement retailer that operates both online and physical stores. Zava's platform receives thousands of customer product reviews daily from shoppers like **Bruno**, who is renovating his kitchen. Your task is to build an automated review moderation system that classifies customer reviews before they go live on the site. Eventually, this system will work alongside **Cora**, Zava's AI shopping assistant, to keep the platform safe and helpful.
 
-In this lab, you will explore the Microsoft Foundry model catalog to find a model that can power Zava's review moderation pipeline.
+In this lab, you will explore the Microsoft Foundry model catalog — directly inside Visual Studio Code using the **Foundry Toolkit** extension — to find a model that can power Zava's review moderation pipeline.
 
 ## Objective
 
-Explore the Microsoft Foundry portal to discover available hosted models, understand model capabilities, and identify a model suitable for inference-based tasks like product review moderation.
+Explore the Foundry Toolkit model catalog in Visual Studio Code to discover available hosted models, understand model capabilities, and identify a model suitable for inference-based tasks like product review moderation.
 
 ---
 
-## Step 1: Open Microsoft Foundry Portal
+## Step 1: Open the project in VS Code
 
-Open the Microsoft Foundry portal at https://ai.azure.com.
+1. Open Visual Studio Code by launching it from the Start menu or desktop.
 
-Select the **Start building** button and sign in with your Azure credentials.
+2. In VS Code, select **File → Open Folder**.
 
-You will land on the Foundry **resources** page. This is the central hub for managing AI resources.
+3. Navigate to the "Desktop" folder, select "Build26-LAB520-main", and click **Select folder**.
 
-Ensure the **New Foundry** switch at the top of the screen is turned on.
+4.  When prompted with "Do you trust the authors of the files in this folder?", select "Yes, I trust the authors"
 
-![newfoundry.png](./images/newfoundry.png)
+    ![trust.png](../images/trust.png)
 
-Now click the linked project name from the **All resources** listing to open it in Foundry. If a dialog opens asking what you would like to do next, you can close it.
+5. You should see the project files in the sidebar. 
 
-![selectproject.png](./images/selectproject.png)
+## Step 2: Open the Foundry Toolkit in Visual Studio Code
 
-> **If you are unable to view the project:**
->
-> 1. Switch to the old Foundry portal by toggling the **New Foundry** switch off at the top of the page.
-> 2. Click **Continue without feedback**.
-> 3. The project will be visible in the old Foundry portal -- click on the project.
-> 4. Once in the project, click the **New Foundry** toggle again to return to the new Foundry with the project retained.
+The **Foundry Toolkit** extension is installed as part of the lab setup, so you can explore models without leaving your editor — no web browser required.
 
+1. Open Visual Studio Code.
+2. In the **Activity Bar** on the left, click the **Foundry Toolkit** icon to open the toolkit panel.
+
+    ![Foundry Toolkit Icon](../images/ftk_icon.png)
+
+3. Next, click on **Set Foundry Project** → **Switch Project** → **Sign in to Azure**.
+4. If you are prompted to sign in to Azure to access your Foundry resources, sign in with your Azure credentials.
+5. After signing in, select the Foundry project that shows up in the list. This is the project pre-provisioned for you, and it contains the model deployments you will use for Zava's review moderation system.
+
+The toolkit panel is your central hub for browsing models, testing them in a playground, and working with agents — all from within VS Code.
 
 ---
 
-## Step 2: Explore the Model Catalog
+## Step 3: Explore the Model Catalog
 
-1. In the main window, click **Discover** from the top menu.
-2. In the **Discover** section, browse the available models by clicking **Models**. These are production-ready, hosted models that you can use without fine-tuning.
-3. You can use the filters within the **Models** page to narrow down the list. For example, you can filter by Supported features (Agent service, Fine-tuning, etc.), Source (Azure OpenAI, Microsoft, Meta, Mistral, etc.), or Inference Task (Chat Completion, Image Analysis, etc.). This lets you quickly filter models based on a specific task or requirement.
+1. In the Foundry Toolkit panel, under **Developer Tools**, select **Model Catalog** to open the model catalog view -- these are production-ready, hosted models you can use without fine-tuning.
 
-Select a model to view the details page. Take note of the following properties in the side box.
+    ![Model Catalog](../images/model_catalog.png)
+2. Browse the available models. Use the filters at the top of the catalog to narrow the list -- for example, by Publisher (Azure OpenAI, Microsoft, Meta, Mistral, etc.), by where the model is **hosted by** (such as Microsoft Foundry), or by task (Chat Completion, Image Analysis, etc.). This lets you quickly filter models based on a specific task or requirement.
+
+Select a model to view its model card. Take note of the following properties.
 
 | Property | Common values |
 |----------|-----------------|
@@ -59,7 +65,7 @@ Select a model to view the details page. Take note of the following properties i
 
 ---
 
-## Step 3: Identify a Model for This Lab
+## Step 4: Identify a Model for This Lab
 
 For this workshop, you need a model that supports **chat completion** -- the ability to accept a system prompt and user messages and return a structured response.
 
@@ -75,39 +81,42 @@ For this workshop, you need a model that supports **chat completion** -- the abi
 
 ---
 
-## Step 4: Check Model Details
+## Step 5: Check Model Details
 
-For this workshop, you need a model that supports **chat completion** -- the ability to accept a system prompt and user messages and return a structured response. The **gpt-5.4-mini** model from Azure OpenAI is high quality, fast, and cost-efficient, which makes it ideal for Zava's review moderation pipeline.
+ The **gpt-5.4-mini** model from Azure OpenAI is high quality, fast, and cost-efficient, which makes it ideal for Zava's review moderation pipeline.
 
 Find **gpt-5.4-mini** in the catalog and open its detail page. Explore the tabs at the top:
 
 1. **Details** -- Model description and capabilities
-2. **Deployments** -- A list of current deployments of this model
-3. **Benchmarks** -- Scores and performance metrics
-4. **Responsible AI** -- Guardrails imposed on the model from Azure AI Content Safety
-5. **License** -- Links to applicable licensing terms
+2. **Benchmarks** -- Scores and performance metrics
+3. **Responsible AI** -- Guardrails imposed on the model from Azure AI Content Safety
+4. **License** -- Links to applicable licensing terms
 
-> You will deploy this model programmatically in Lab 2. For now, just confirm it is available in the catalog and you can review the model card details.
+For the sake of this workshop the model has been pre-deployed for you.
+
+> [!NOTE]
+> The model card is opened in a web browser page. Make sure to return to VS Code after reviewing it to continue with the lab.
 
 ---
 
 
-## Step 5: Explore the Playground (Optional)
+## Step 6: Explore the Playground (Optional)
 
-1. From the **gpt-5.4-mini** model's **Deployments** tab, select the existing deployment. This brings you to the **playground** for the model deployment.
-2. In the **Instructions** field, enter:
+1. Back in VS Code, under **Developer Tools** → **Build** in the toolkit panel, open the **Model Playground**. This opens the model playground inside VS Code.
+2. Select **gpt-5.4-mini** from the model dropdown.
+3. In the **System prompt** (instructions), enter:
 
 ```
 You are a product review moderator for Zava, a home-improvement retailer. Classify the following customer review as SAFE, NEEDS_REVIEW, or UNSAFE. Respond with only the classification label.
 ```
 
-3. In the **Chat with the model** field, enter:
+4. In the chat box, enter:
 
 ```
 This paint is garbage and whoever designed it should be fired
 ```
 
-4. Click **Send** and observe the response
+5. Send the message and observe the response
 
 This is a preview of the inference pattern you will implement in code during Labs 3 and 4 to moderate Zava product reviews.
 
@@ -115,9 +124,8 @@ This is a preview of the inference pattern you will implement in code during Lab
 
 ## What You Learned
 
-- ✅ How to navigate the Microsoft Foundry portal
-- ✅ How to browse the model catalog
-- ✅ How to identify models suitable for chat completion tasks
+- ✅ How to navigate the Foundry Toolkit in Visual Studio Code
+- ✅ How to browse the model catalog from within VS Code
 - ✅ How a model responds to a Zava review moderation prompt
 
 ---

@@ -33,16 +33,17 @@ MODEL_DEPLOYMENT_NAME_2=gpt-5.4
 
 ### Deploying a New Model
 
-If you only have one model deployed, deploy a second one from the Foundry portal:
+If you only have one model deployed, deploy a second one from the Foundry Toolkit Model Catalog:
 
-1. Go to https://ai.azure.com
-2. Open your **Project**
-3. Select **View Deployments** or **Models** from the left-hand menu
-4. Click **Deploy** > **Deploy a base model**
-5. Search for **gpt-5.4** and select it
-6. Select **Deploy** > **Default settings**
+1. Click on the Foundry Toolkit icon in the VS Code Activity Bar to open the extension panel
+2. Navigate to **Developer Tools** -> **Discover** -> **Model Catalog**
+3. Apply the filter **Hosted by** -> **Foundry** to see all Foundry-hosted models
+4. In the search bar type **gpt-5.4**
+5. Click **Deploy** > **Deploy with Default settings**
 
-Wait for the deployment to complete before proceeding. You should see the playground once complete.
+Wait for the deployment to complete before proceeding. You should see the pop-up below once complete.
+
+![Foundry Toolkit Deployment Complete](../images/ftk_deployment_success.png)
 
 > **Note:** If you are unable to deploy a second model, skip this lab and proceed to [Lab 6](./lab6-deploy-agent.md).
 

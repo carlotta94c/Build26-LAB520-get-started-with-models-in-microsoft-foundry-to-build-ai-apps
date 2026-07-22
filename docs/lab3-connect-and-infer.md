@@ -23,7 +23,7 @@ As Serena (Zava's developer), write Python code that authenticates against your 
 
 Open src/01_first_inference.py in your editor. 
 
-The following sections walk through and explains the code in the solution step by step covering the key aspects of the solution.
+The following sections walk through the code and explain the key concepts.
 
 ### Authentication and Client Setup
 
@@ -241,6 +241,8 @@ Try variations:
 
 ### Add Temperature Control
 
+The temperature parameter can be increased or decreased to vary the determinism of the LLM output. A temperature of 0.0 provides the most deterministic output (though not guaranteed to be 100% the same across runs), whereas the maximum temperature of 1.0 results in the least deterministic (most variable) output.
+
 ```python
 response = inference_client.chat.completions.create(
     model=os.environ["MODEL_DEPLOYMENT_NAME"],
@@ -338,7 +340,7 @@ Here's the minimal change. Replace the inference request block (around lines 42-
 
 ### Break It on Purpose
 
-The best way to understand what each piece does is to remove it and see what happens. Try these experiments (undo each change before the next):
+The experiments above focused on how the model responds to different inputs. This next set focuses on what happens when the **code itself** is misconfigured -- missing environment variables, wrong model names, or broken imports. Try these changes one at a time (undo each before the next):
 
 | Experiment | What to Change | What Happens |
 |------------|---------------|---------------|
@@ -353,14 +355,16 @@ These errors are the same ones you will hit in real projects. Seeing them now ma
 
 ## Step 4: Understand the Response Object
 
-The full response object contains useful metadata:
+The full response object contains useful metadata, which is printed out by the Python script:
 
 ```python
 print(f"Model: {response.model}")
 print(f"Finish reason: {response.choices[0].finish_reason}")
-print(f"Prompt tokens: {response.usage.prompt_tokens}")
-print(f"Completion tokens: {response.usage.completion_tokens}")
-print(f"Total tokens: {response.usage.total_tokens}")
+print(
+    f"Tokens used: {response.usage.total_tokens} "
+    f"(prompt: {response.usage.prompt_tokens}, "
+    f"completion: {response.usage.completion_tokens})"
+)
 ```
 
 | Field | Description |
